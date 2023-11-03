@@ -1,4 +1,6 @@
 import tkinter as tk
+from tkinter import ttk
+import datetime
 
 def ventanaDeRegistroNacimiento():
 	ventanaRegistroNacimiento = tk.Tk()
@@ -71,14 +73,24 @@ def ventanaDeRegistroNacimiento():
 	labelDia = tk.Label(ventanaRegistroNacimiento, text="Dia:", font=("Arial", 12), bg="light gray")
 	labelDia.grid(row=7, column=0, pady=16)
 
-	entryProvincia = tk.Entry(ventanaRegistroNacimiento, width=21, font=("Arial", 16))
-	entryProvincia.grid(row=6, column=1, pady=16)
+	dias = [str(i) for i in range(1,32)]
+	comboDias = ttk.Combobox(ventanaRegistroNacimiento, values=dias, font=("Arial", 12))
+	comboDias.grid(row=7, column=1, pady=16)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
-	labelCita = tk.Label(ventanaRegistroNacimiento, text="Mes:", font=("Arial", 12), bg="light gray")
-	labelCita.grid(row=8, column=0, pady=16)
+	labelMeses = tk.Label(ventanaRegistroNacimiento, text="Mes:", font=("Arial", 12), bg="light gray")
+	labelMeses.grid(row=8, column=0, pady=16)
+
+	meses = [str(i) for i in range(1,12)]
+	comboMeses = ttk.Combobox(ventanaRegistroNacimiento, values=meses, font=("Arial", 12))
+	comboMeses.grid(row=8, column=1, pady=16)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
-	labelCita = tk.Label(ventanaRegistroNacimiento, text="Año:", font=("Arial", 12), bg="light gray")
-	labelCita.grid(row=9, column=0, pady=16)
+	labelAños = tk.Label(ventanaRegistroNacimiento, text="Año:", font=("Arial", 12), bg="light gray")
+	labelAños.grid(row=9, column=0, pady=16)
+
+	annoActual = datetime.datetime.now().year
+	annos = [str(i) for i in range(1900, annoActual + 1)]
+	comboAños = ttk.Combobox(ventanaRegistroNacimiento, values=annos, font=("Arial", 12))
+	comboAños.grid(row=9, column=1, pady=16)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelCita = tk.Label(ventanaRegistroNacimiento, text="Padre:", font=("Arial", 12), bg="light gray")
 	labelCita.grid(row=10, column=0, pady=16)
@@ -150,4 +162,4 @@ def ventanaDeRegistro():
 
 	ventanaRegistro.mainloop()
 
-ventanaDeRegistro()
+ventanaDeRegistroNacimiento()
