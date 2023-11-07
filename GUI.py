@@ -1,7 +1,13 @@
+################################################
+#   Autor: Luis Aguilar y Dylan Meza           #
+#   Fecha de creación: 1/11/2023  21:28 pm     #
+#   Ultimo cambio: 04/10/2023 4:55 pm          #
+#   Version: 3.11.4                            #
+################################################
 import tkinter as tk
 from tkinter import ttk
 import datetime
-
+from funciones import registrarPersona
 
 def mostrarArbolGenealogico():
 	ventanaArbolGenealogico = tk.Tk()
@@ -87,10 +93,10 @@ def ventanaDeRegistroNacimiento():
 	labelSexo.grid(row=3, column=0, pady=13)
 
 	varSexo = tk.StringVar()
-	radioMasculino = tk.Radiobutton(ventanaRegistroNacimiento, text="Masculino", variable=varSexo, value="Masculino", font=("Arial", 15), bg="light gray")
+	radioMasculino = tk.Radiobutton(ventanaRegistroNacimiento, text="Masculino", variable=varSexo, value="M", font=("Arial", 15), bg="light gray")
 	radioMasculino.place(x=152, y=166)
 
-	radioFemenino = tk.Radiobutton(ventanaRegistroNacimiento, text="Femenino", variable=varSexo, value="Femenino", font=("Arial", 15), bg="light gray")
+	radioFemenino = tk.Radiobutton(ventanaRegistroNacimiento, text="Femenino", variable=varSexo, value="F", font=("Arial", 15), bg="light gray")
 	radioFemenino.place(x=294, y=166)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelDistrito = tk.Label(ventanaRegistroNacimiento, text="Distrito:", font=("Arial", 12), bg="light gray")
@@ -125,13 +131,13 @@ def ventanaDeRegistroNacimiento():
 	comboMeses = ttk.Combobox(ventanaRegistroNacimiento, values=meses, font=("Arial", 16))
 	comboMeses.grid(row=8, column=1, pady=13)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
-	labelAños = tk.Label(ventanaRegistroNacimiento, text="Año:", font=("Arial", 12), bg="light gray")
-	labelAños.grid(row=9, column=0, pady=13)
+	labelAnnos = tk.Label(ventanaRegistroNacimiento, text="Año:", font=("Arial", 12), bg="light gray")
+	labelAnnos.grid(row=9, column=0, pady=13)
 
 	annoActual = datetime.datetime.now().year
 	annos = [str(i) for i in range(1900, annoActual + 1)]
-	comboAños = ttk.Combobox(ventanaRegistroNacimiento, values=annos, font=("Arial", 16))
-	comboAños.grid(row=9, column=1, pady=13)
+	comboAnnos = ttk.Combobox(ventanaRegistroNacimiento, values=annos, font=("Arial", 16))
+	comboAnnos.grid(row=9, column=1, pady=13)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelPadre = tk.Label(ventanaRegistroNacimiento, text="Padre:", font=("Arial", 12), bg="light gray")
 	labelPadre.grid(row=10, column=0, pady=13)
@@ -157,7 +163,7 @@ def ventanaDeRegistroNacimiento():
 	comboNacionalidadMadre = ttk.Combobox(ventanaRegistroNacimiento, values=nacionalidades, font=("Arial", 16))
 	comboNacionalidadMadre.grid(row=13, column=1, pady=13)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
-	botonRegistrar = tk.Button(ventanaRegistroNacimiento, text="Registrar", width=12, height=1, font=("Arial", 12))
+	botonRegistrar = tk.Button(ventanaRegistroNacimiento, text="Registrar", width=12, height=1, font=("Arial", 12), command=registrarPersona)
 	botonRegistrar.grid(row=14, column=0, pady=10)
 
 	botonLimpiar = tk.Button(ventanaRegistroNacimiento, text="Limpiar", width=12, height=1, font=("Arial", 12))
