@@ -6,8 +6,10 @@
 ################################################
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 import datetime
-from funciones import registrarPersona
+from funciones import *
+from archivos import *
 
 def mostrarArbolGenealogico():
 	ventanaArbolGenealogico = tk.Tk()
@@ -214,8 +216,22 @@ def ventanaDeRegistro():
 
 	entryContra = tk.Entry(ventanaRegistro, width=25, font=("Arial", 12))
 	entryContra.place(x=120, y=60)
-
-	botonIngresar = tk.Button(ventanaRegistro, text="Ingresar", width=20, height=2, command=ventanaDeInicio)
+	
+	def registrarse():
+		inicio = False
+		usuarios = leerRegistro("Administradores.txt")
+		nombreUsuario = entryUsuario.get()
+		contrasennia = entryContra.get()
+		for credenciales in usuarios:
+			if credenciales[0] == nombreUsuario and credenciales[1] == contrasennia:
+				inicio = True
+				cerrarVentana(ventanaRegistro)
+				ventanaDeInicio()
+             
+		if not inicio:	
+			messagebox.showwarning("Error","El usuario o contraseña no coinciden")
+  
+	botonIngresar = tk.Button(ventanaRegistro, text="Ingresar", width=20, height=2, command=registrarse)
 	botonIngresar.place(x=40, y=120)
 
 	botonLimpiar = tk.Button(ventanaRegistro, text="Limpiar", width=20, height=2)

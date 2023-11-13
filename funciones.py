@@ -4,6 +4,10 @@
 #   Ultimo cambio: 04/10/2023 4:55 pm          #
 #   Version: 3.11.4                            #
 ################################################
+
+def cerrarVentana(ventana):
+    ventana.destroy()
+    
 def registrarPersona():
 
     cedula = entryCitaProvincia.get() + "-" + entryCitaTomo.get() + "-" + entryCitaAsiento.get()

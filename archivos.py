@@ -42,3 +42,24 @@ def lee(nomArchLeer):
     except:
         print("Error al leer el archivo: ", nomArchLeer)
     return lista
+
+def leerRegistro(nombreArch):
+    """
+    Función: leer el registro de usuarios
+    Entrada: nombreArch(str): nombre del archivo a leer
+    Salida:
+        -usuarios(list):
+    """
+    usuarios = []
+    
+    try:
+        with open(nombreArch, 'r') as archivo:
+            for linea in archivo:
+                usuario, contraseña = linea.strip().split(',')
+                usuarios.append((usuario, contraseña))
+    except FileNotFoundError:
+        print(f"Error: El archivo {nombreArch} no fue encontrado.")
+    except Exception as e:
+        print(f"Error: {e}")
+
+    return usuarios
