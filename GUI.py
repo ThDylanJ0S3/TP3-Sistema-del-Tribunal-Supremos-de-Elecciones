@@ -7,11 +7,21 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
+from clasePersona import *
 import datetime
 from funciones import *
 from archivos import *
 
-def mostrarArbolGenealogico():
+global listaPersonas
+global listaCedulas
+global listaHombres
+global listaMujeres
+listaPersonas = lee("PadresOriginales")
+listaCedulasNombre = obtenerCedulaNombre(listaPersonas)
+listaHombres = separarHombres(listaPersonas)
+listaMujeres = separarMujeres(listaPersonas)
+
+def mostrarArbolGenealogico():    
 	ventanaArbolGenealogico = tk.Tk()
 	ventanaArbolGenealogico.title("Ventana de registro")
 	ventanaArbolGenealogico.geometry("600x400")
@@ -19,6 +29,9 @@ def mostrarArbolGenealogico():
 	ventanaArbolGenealogico.configure(bg="light gray")
 	ventanaArbolGenealogico.columnconfigure(0, weight=1)
 	ventanaArbolGenealogico.columnconfigure(2, weight=1)
+ 
+	global listaPersonas
+	global listaCedulas
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelArbol = tk.Label(ventanaArbolGenealogico, text="Mostrar Árbol Genealógico", font=("Arial", 17), bg="light gray")
 	labelArbol.place(x=150, y=20)
@@ -26,29 +39,46 @@ def mostrarArbolGenealogico():
 	labelPersona = tk.Label(ventanaArbolGenealogico, text="Persona:", font=("Arial", 12), bg="light gray")
 	labelPersona.place(x=40, y=70)
 
-	comboPersona = ttk.Combobox(ventanaArbolGenealogico, values="", font=("Arial", 16))
+	comboPersona = ttk.Combobox(ventanaArbolGenealogico, values=listaCedulasNombre, font=("Arial", 16))
 	comboPersona.place(x=140, y=70)
 
-	botonRegistrar = tk.Button(ventanaArbolGenealogico, text="Mostrar", width=12, height=2, font=("Arial", 12))
-	botonRegistrar.place(x=140, y=131)
+
+	labelResultado = tk.Label(ventanaArbolGenealogico, text="Resultado de la búsqueda: ", font=("Arial", 12), bg="light gray")
+	labelResultado.place(x=40, y=201)	
+
+	entryPadreMostrar = tk.Entry(ventanaArbolGenealogico, width=14, font=("Arial", 16), state="disabled")
+	entryPadreMostrar.place(x=100, y=236)
+
+	entryMadreMostrar = tk.Entry(ventanaArbolGenealogico, width=14, font=("Arial", 16), state="disabled")
+	entryMadreMostrar.place(x=310, y=236)
+
+	entryHijo = tk.Entry(ventanaArbolGenealogico, width=14, font=("Arial", 16), state="disabled")
+	entryHijo.place(x=207, y=330)
+ 
+	def mostrarResultadoBusqueda():
+		hijo = comboPersona.get()
+		for persona in listaPersonas:
+			if hijo[0:9] == persona.getCedula():
+				print(persona.getMadre(),persona.getPadre())
+				entryHijo.config(state="normal", width=len(hijo[11:])-3)
+				entryMadreMostrar.config(state="normal", width=len(persona.getMadre())+1)
+				entryPadreMostrar.config(state="normal", width=len(persona.getPadre())+1)
+				entryHijo.insert(0,hijo[11:-1])
+				entryMadreMostrar.insert(0,str(persona.getMadre()))
+				entryPadreMostrar.insert(0,str(persona.getPadre()))
+				entryHijo.config(state="disabled")
+				entryMadreMostrar.config(state="disabled")
+				entryPadreMostrar.config(state="disabled")
+				botonMostrar.config(state="disabled")
+ 
+	botonMostrar = tk.Button(ventanaArbolGenealogico, text="Mostrar", width=12, height=2, font=("Arial", 12), command=mostrarResultadoBusqueda)
+	botonMostrar.place(x=140, y=131)
 
 	botonLimpiar = tk.Button(ventanaArbolGenealogico, text="Limpiar", width=12, height=2, font=("Arial", 12))
 	botonLimpiar.place(x=280, y=131)
 
 	botonRegresar = tk.Button(ventanaArbolGenealogico, text="Regresar", width=12, height=2, font=("Arial", 12), command=ventanaArbolGenealogico.destroy)
 	botonRegresar.place(x=420, y=131)
-
-	labelResultado = tk.Label(ventanaArbolGenealogico, text="Resultado de la búsqueda: ", font=("Arial", 12), bg="light gray")
-	labelResultado.place(x=40, y=201)	
-
-	entryPadreMostrar = tk.Entry(ventanaArbolGenealogico, width=14, font=("Arial", 16))
-	entryPadreMostrar.place(x=100, y=236)
-
-	entryMadreMostrar = tk.Entry(ventanaArbolGenealogico, width=14, font=("Arial", 16))
-	entryMadreMostrar.place(x=310, y=236)
-
-	entryHijo = tk.Entry(ventanaArbolGenealogico, width=14, font=("Arial", 16))
-	entryHijo.place(x=207, y=330)
 # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #	
 def ventanaDeRegistroNacimiento():
 	ventanaRegistroNacimiento = tk.Tk()
@@ -59,6 +89,7 @@ def ventanaDeRegistroNacimiento():
 	ventanaRegistroNacimiento.columnconfigure(0, weight=1)
 	ventanaRegistroNacimiento.columnconfigure(2, weight=1)
 
+	provincia = ["San José","Alajuela","Cartago","Heredia","Guanacaste","Puntarenas","Limón"]
 	nacionalidades = ["Costarricense","Mexicana","Española","Argentina","Colombiana"]
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelCita = tk.Label(ventanaRegistroNacimiento, text="Cita:", font=("Arial", 12), bg="light gray")
@@ -116,7 +147,7 @@ def ventanaDeRegistroNacimiento():
 	labelProvincia = tk.Label(ventanaRegistroNacimiento, text="Provincia:", font=("Arial", 12), bg="light gray")
 	labelProvincia.grid(row=6, column=0, pady=13)
 
-	entryProvincia = tk.Entry(ventanaRegistroNacimiento, width=21, font=("Arial", 16), state="readonly")
+	entryProvincia = ttk.Combobox(ventanaRegistroNacimiento,values=provincia, width=21, font=("Arial", 16), state="readonly")
 	entryProvincia.grid(row=6, column=1, pady=13)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelDia = tk.Label(ventanaRegistroNacimiento, text="Dia:", font=("Arial", 12), bg="light gray")
@@ -136,7 +167,7 @@ def ventanaDeRegistroNacimiento():
 	labelAnnos = tk.Label(ventanaRegistroNacimiento, text="Año:", font=("Arial", 12), bg="light gray")
 	labelAnnos.grid(row=9, column=0, pady=13)
 
-	annoActual = datetime.datetime.now().year
+	annoActual = datetime.now().year
 	annos = [str(i) for i in range(1900, annoActual + 1)]
 	comboAnnos = ttk.Combobox(ventanaRegistroNacimiento, values=annos, font=("Arial", 16))
 	comboAnnos.grid(row=9, column=1, pady=13)
@@ -165,6 +196,9 @@ def ventanaDeRegistroNacimiento():
 	comboNacionalidadMadre = ttk.Combobox(ventanaRegistroNacimiento, values=nacionalidades, font=("Arial", 16))
 	comboNacionalidadMadre.grid(row=13, column=1, pady=13)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+
+	#def 
+
 	botonRegistrar = tk.Button(ventanaRegistroNacimiento, text="Registrar", width=12, height=1, font=("Arial", 12), command=registrarPersona)
 	botonRegistrar.grid(row=14, column=0, pady=10)
 
@@ -238,5 +272,5 @@ def ventanaDeRegistro():
 	botonLimpiar.place(x=200, y=120)
 
 	ventanaRegistro.mainloop()
-
+ 
 ventanaDeRegistro()

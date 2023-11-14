@@ -39,8 +39,8 @@ def lee(nomArchLeer):
         lista = pickle.load(f)
         print("Archivo leído: ", nomArchLeer)
         f.close()
-    except:
-        print("Error al leer el archivo: ", nomArchLeer)
+    except Exception as e:
+        print("Error al leer el archivo: ", nomArchLeer, f"error {e}")
     return lista
 
 def leerRegistro(nombreArch):
