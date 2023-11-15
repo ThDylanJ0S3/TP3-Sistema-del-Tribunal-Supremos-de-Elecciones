@@ -39,6 +39,27 @@ def lee(nomArchLeer):
         lista = pickle.load(f)
         print("Archivo leído: ", nomArchLeer)
         f.close()
-    except:
-        print("Error al leer el archivo: ", nomArchLeer)
+    except Exception as e:
+        print("Error al leer el archivo: ", nomArchLeer, f"error {e}")
     return lista
+
+def leerRegistro(nombreArch):
+    """
+    Función: leer el registro de usuarios
+    Entrada: nombreArch(str): nombre del archivo a leer
+    Salida:
+        -usuarios(list):
+    """
+    usuarios = []
+    
+    try:
+        with open(nombreArch, 'r') as archivo:
+            for linea in archivo:
+                usuario, contraseña = linea.strip().split(',')
+                usuarios.append((usuario, contraseña))
+    except FileNotFoundError:
+        print(f"Error: El archivo {nombreArch} no fue encontrado.")
+    except Exception as e:
+        print(f"Error: {e}")
+
+    return usuarios
