@@ -105,7 +105,10 @@ def ventanaDeRegistroNacimiento():
 	ventanaRegistroNacimiento.configure(bg="light gray")
 	ventanaRegistroNacimiento.columnconfigure(0, weight=1)
 	ventanaRegistroNacimiento.columnconfigure(2, weight=1)
-	
+ 
+	global provincia
+	global listaHombres
+	global listaMujeres
 	nacionalidades = ["Costarricense","Mexicana","Española","Argentina","Colombiana"]
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelCita = tk.Label(ventanaRegistroNacimiento, text="Cita:", font=("Arial", 12), bg="light gray")
@@ -190,7 +193,7 @@ def ventanaDeRegistroNacimiento():
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelPadre = tk.Label(ventanaRegistroNacimiento, text="Padre:", font=("Arial", 12), bg="light gray")
 	labelPadre.grid(row=10, column=0, pady=13)
-
+ 
 	lHombre = [str(persona.getNombre())+" "+str(persona.getApellido1())+" "+str(persona.getApellido2()) for persona in listaHombres]
 	comboPadre = ttk.Combobox(ventanaRegistroNacimiento, values=lHombre, font=("Arial", 16))
 	comboPadre.grid(row=10, column=1, pady=13)
