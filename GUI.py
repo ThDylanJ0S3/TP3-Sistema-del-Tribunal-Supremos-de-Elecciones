@@ -17,11 +17,13 @@ global listaCedulas
 global listaHombres
 global listaMujeres
 global provincia
+global registroPersonas
 listaPersonas = lee("PadresOriginales")
 listaCedulasNombre = obtenerCedulaNombre(listaPersonas)
 listaHombres = separarHombres(listaPersonas)
 listaMujeres = separarMujeres(listaPersonas)
 provincia = ["San José","Alajuela","Cartago","Heredia","Guanacaste","Puntarenas","Limón"]
+registroPersonas = []
 
 def mostrarArbolGenealogico():    
 	ventanaArbolGenealogico = tk.Tk()
@@ -104,6 +106,8 @@ def ventanaDeRegistroNacimiento():
 	ventanaRegistroNacimiento.columnconfigure(0, weight=1)
 	ventanaRegistroNacimiento.columnconfigure(2, weight=1)
 	global provincia
+	global listaHombres
+	global listaMujeres
 	nacionalidades = ["Costarricense","Mexicana","Española","Argentina","Colombiana"]
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelCita = tk.Label(ventanaRegistroNacimiento, text="Cita:", font=("Arial", 12), bg="light gray")
@@ -189,7 +193,8 @@ def ventanaDeRegistroNacimiento():
 	labelPadre = tk.Label(ventanaRegistroNacimiento, text="Padre:", font=("Arial", 12), bg="light gray")
 	labelPadre.grid(row=10, column=0, pady=13)
 
-	comboPadre = ttk.Combobox(ventanaRegistroNacimiento, values="", font=("Arial", 16))
+	lHombre = [str(persona.getPadre()) for persona in listaHombres]
+	comboPadre = ttk.Combobox(ventanaRegistroNacimiento, values=lHombre, font=("Arial", 16))
 	comboPadre.grid(row=10, column=1, pady=13)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelNacionalidadPadre = tk.Label(ventanaRegistroNacimiento, text="Nacionalidad:", font=("Arial", 12), bg="light gray")
@@ -201,7 +206,8 @@ def ventanaDeRegistroNacimiento():
 	labelMadre = tk.Label(ventanaRegistroNacimiento, text="Madre:", font=("Arial", 12), bg="light gray")
 	labelMadre.grid(row=12, column=0, pady=13)
 
-	comboMadre = ttk.Combobox(ventanaRegistroNacimiento, values="", font=("Arial", 16))
+	lMujeres = [str(persona.getMadre()) for persona in listaMujeres]
+	comboMadre = ttk.Combobox(ventanaRegistroNacimiento, values=lMujeres, font=("Arial", 16))
 	comboMadre.grid(row=12, column=1, pady=13)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelNacionalidadMadre = tk.Label(ventanaRegistroNacimiento, text="Nacionalidad:", font=("Arial", 12), bg="light gray")
@@ -211,12 +217,60 @@ def ventanaDeRegistroNacimiento():
 	comboNacionalidadMadre.grid(row=13, column=1, pady=13)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 
-	#def 
+	def registrarPersona():
+		cedula = entryCitaProvincia.get() + "-" + entryCitaTomo.get() + "-" + entryCitaAsiento.get()
+		nombre = entryNombre.get()
+		apellido1 = entryApellidos.get()
+		apellido2 = entryApellidos.get()
+		sexo = varSexo.get()
+		localidad = entryDistrito.get() + "," + entryCanton.get() + "," + comboProvincia.get()
+		fechaNacimiento = comboDias.get() + "/" + comboMeses.get() + "/" + comboAnnos.get()
+		padre = comboPadre.get()
+		nacionalidadPadre = comboNacionalidadPadre.get()
+		madre = comboMadre.get()
+		nacionalidadMadre = comboNacionalidadMadre.get()
+
+		nuevaPersona = Persona(
+			cedula=cedula,
+			nombre=nombre,
+			apellido1=apellido1,
+			apellido2=apellido2,
+			sexo=sexo,
+			localidad=localidad,
+			fechaNacimiento=fechaNacimiento,
+			padre=padre,
+			nacionalidadPadre=nacionalidadPadre,
+			madre=madre,
+			nacionalidadMadre=nacionalidadMadre
+
+		)
+
+		registroPersonas.append(nuevaPersona)
+		
+		for i in registroPersonas:
+			i.mostrarTodo()
 
 	botonRegistrar = tk.Button(ventanaRegistroNacimiento, text="Registrar", width=12, height=1, font=("Arial", 12), command=registrarPersona)
 	botonRegistrar.grid(row=14, column=0, pady=10)
 
-	botonLimpiar = tk.Button(ventanaRegistroNacimiento, text="Limpiar", width=12, height=1, font=("Arial", 12))
+	def limpiarDatos():
+		entryCitaProvincia.delete(0, 'end')
+		entryCitaTomo.delete(0, 'end')
+		entryCitaAsiento.delete(0, 'end')
+		entryNombre.delete(0, 'end')
+		entryApellidos.delete(0, 'end')
+		entryDistrito.delete(0, 'end')
+		entryCanton.delete(0, 'end')
+		comboProvincia.set('')
+		comboDias.set('')
+		comboMeses.set('')
+		comboAnnos.set('')
+		comboPadre.set('')
+		comboNacionalidadPadre.set('')
+		comboMadre.set('')
+		comboNacionalidadMadre.set('')
+
+	botonLimpiar = tk.Button(ventanaRegistroNacimiento, text="Limpiar", command=limpiarDatos, width=12, height=1, font=("Arial", 12))
 	botonLimpiar.grid(row=14, column=1, pady=10)
 
 	botonRegresar = tk.Button(ventanaRegistroNacimiento, text="Regresar", width=12, height=1, font=("Arial", 12), command=ventanaRegistroNacimiento.destroy)
