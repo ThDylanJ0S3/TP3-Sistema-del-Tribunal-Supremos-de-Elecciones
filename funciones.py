@@ -25,7 +25,7 @@ def separarMujeres(lista):
 def separarHombres(lista):
     listaHombres = []
     for persona in lista:
-        if persona.getSexo() == "H":
+        if persona.getSexo() == "M":
             listaHombres.append(persona)
     return listaHombres
 
