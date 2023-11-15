@@ -16,11 +16,13 @@ global listaPersonas
 global listaCedulas
 global listaHombres
 global listaMujeres
+global provincia
 global registroPersonas
 listaPersonas = lee("PadresOriginales")
 listaCedulasNombre = obtenerCedulaNombre(listaPersonas)
 listaHombres = separarHombres(listaPersonas)
 listaMujeres = separarMujeres(listaPersonas)
+provincia = ["San José","Alajuela","Cartago","Heredia","Guanacaste","Puntarenas","Limón"]
 registroPersonas = []
 
 def mostrarArbolGenealogico():    
@@ -61,8 +63,7 @@ def mostrarArbolGenealogico():
 		hijo = comboPersona.get()
 		for persona in listaPersonas:
 			if hijo[0:9] == persona.getCedula():
-				print(persona.getMadre(),persona.getPadre())
-				entryHijo.config(state="normal", width=len(hijo[11:])-3)
+				entryHijo.config(state="normal", width=len(hijo[11:]))
 				entryMadreMostrar.config(state="normal", width=len(persona.getMadre())+1)
 				entryPadreMostrar.config(state="normal", width=len(persona.getPadre())+1)
 				entryHijo.insert(0,hijo[11:-1])
@@ -72,11 +73,25 @@ def mostrarArbolGenealogico():
 				entryMadreMostrar.config(state="disabled")
 				entryPadreMostrar.config(state="disabled")
 				botonMostrar.config(state="disabled")
+				botonLimpiar.config(state="normal")
  
 	botonMostrar = tk.Button(ventanaArbolGenealogico, text="Mostrar", width=12, height=2, font=("Arial", 12), command=mostrarResultadoBusqueda)
 	botonMostrar.place(x=140, y=131)
 
-	botonLimpiar = tk.Button(ventanaArbolGenealogico, text="Limpiar", width=12, height=2, font=("Arial", 12))
+	def limpiarEntradas():
+		entryHijo.config(state="normal", width=14)
+		entryMadreMostrar.config(state="normal", width=14)
+		entryPadreMostrar.config(state="normal", width=14)
+		entryHijo.delete(0,tk.END)
+		entryMadreMostrar.delete(0,tk.END)
+		entryPadreMostrar.delete(0,tk.END)
+		entryHijo.config(state="disabled")
+		entryMadreMostrar.config(state="disabled")
+		entryPadreMostrar.config(state="disabled")
+		botonLimpiar.config(state="disabled")
+		botonMostrar.config(state="normal")
+  
+	botonLimpiar = tk.Button(ventanaArbolGenealogico, text="Limpiar", width=12, height=2, font=("Arial", 12), state="disabled", command=limpiarEntradas)
 	botonLimpiar.place(x=280, y=131)
 
 	botonRegresar = tk.Button(ventanaArbolGenealogico, text="Regresar", width=12, height=2, font=("Arial", 12), command=ventanaArbolGenealogico.destroy)
@@ -90,8 +105,9 @@ def ventanaDeRegistroNacimiento():
 	ventanaRegistroNacimiento.configure(bg="light gray")
 	ventanaRegistroNacimiento.columnconfigure(0, weight=1)
 	ventanaRegistroNacimiento.columnconfigure(2, weight=1)
-
-	provincia = ["San José","Alajuela","Cartago","Heredia","Guanacaste","Puntarenas","Limón"]
+	global provincia
+	global listaHombres
+	global listaMujeres
 	nacionalidades = ["Costarricense","Mexicana","Española","Argentina","Colombiana"]
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelCita = tk.Label(ventanaRegistroNacimiento, text="Cita:", font=("Arial", 12), bg="light gray")
@@ -199,7 +215,6 @@ def ventanaDeRegistroNacimiento():
 
 	comboNacionalidadMadre = ttk.Combobox(ventanaRegistroNacimiento, values=nacionalidades, font=("Arial", 16))
 	comboNacionalidadMadre.grid(row=13, column=1, pady=13)
-
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 
 	def registrarPersona():
@@ -260,7 +275,88 @@ def ventanaDeRegistroNacimiento():
 
 	botonRegresar = tk.Button(ventanaRegistroNacimiento, text="Regresar", width=12, height=1, font=("Arial", 12), command=ventanaRegistroNacimiento.destroy)
 	botonRegresar.grid(row=14, column=2, pady=10)
-	ventanaRegistroNacimiento.mainloop()
+
+ # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
+def ventanaReportesProvincia():
+	ventanaReporte = tk.Tk()
+	ventanaReporte.title("Ventana principal")
+	ventanaReporte.geometry("400x300")
+	ventanaReporte.resizable(width=False, height=False)
+	ventanaReporte.configure(bg="light gray")
+	ventanaReporte.columnconfigure(0, weight=1)
+	ventanaReporte.rowconfigure(1, weight=1)
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+	labelReport = tk.Label(ventanaReporte, text="Provincias", font=("Arial", 12), bg="light gray")
+	labelReport.grid(row=0, column=0, pady=10)
+
+	botonProvincia = tk.Button(ventanaReporte, text="Personas por provincia", width=20, height=2, command=mostrarArbolGenealogico)
+	botonProvincia.grid(row=1, column=0, pady=10)
+
+	botonNacidos = tk.Button(ventanaReporte, text="Personas nacidas a partir de", width=20, height=2)
+	botonNacidos.grid(row=2, column=0, pady=10)
+
+ # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
+def ventanaReportesAnnos():
+	ventanaReporte = tk.Tk()
+	ventanaReporte.title("Ventana principal")
+	ventanaReporte.geometry("400x300")
+	ventanaReporte.resizable(width=False, height=False)
+	ventanaReporte.configure(bg="light gray")
+	ventanaReporte.columnconfigure(0, weight=1)
+	ventanaReporte.rowconfigure(1, weight=1)
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+	labelReport = tk.Label(ventanaReporte, text="Ingrese un año", font=("Arial", 12), bg="light gray")
+	labelReport.grid(row=0, column=0, pady=10)
+
+	botonProvincia = tk.Button(ventanaReporte, text="Personas por provincia", width=20, height=2, command=mostrarArbolGenealogico)
+	botonProvincia.grid(row=1, column=0, pady=10)
+
+	botonNacidos = tk.Button(ventanaReporte, text="Personas nacidas a partir de", width=20, height=2)
+	botonNacidos.grid(row=2, column=0, pady=10)
+
+ # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
+def ventanaReportesHospital():
+	ventanaReporte = tk.Tk()
+	ventanaReporte.title("Ventana principal")
+	ventanaReporte.geometry("400x300")
+	ventanaReporte.resizable(width=False, height=False)
+	ventanaReporte.configure(bg="light gray")
+	ventanaReporte.columnconfigure(0, weight=1)
+	ventanaReporte.rowconfigure(1, weight=1)
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+	labelReport = tk.Label(ventanaReporte, text="Reportes", font=("Arial", 12), bg="light gray")
+	labelReport.grid(row=0, column=0, pady=10)
+
+	botonProvincia = tk.Button(ventanaReporte, text="Personas por provincia", width=20, height=2, command=mostrarArbolGenealogico)
+	botonProvincia.grid(row=1, column=0, pady=10)
+
+	botonNacidos = tk.Button(ventanaReporte, text="Personas nacidas a partir de", width=20, height=2)
+	botonNacidos.grid(row=2, column=0, pady=10)
+
+ # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
+def ventanaDeReportes():
+	ventanaReporte = tk.Tk()
+	ventanaReporte.title("Ventana principal")
+	ventanaReporte.geometry("400x300")
+	ventanaReporte.resizable(width=False, height=False)
+	ventanaReporte.configure(bg="light gray")
+	ventanaReporte.columnconfigure(0, weight=1)
+	ventanaReporte.rowconfigure(1, weight=1)
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+	labelReport = tk.Label(ventanaReporte, text="Reportes", font=("Arial", 12), bg="light gray")
+	labelReport.grid(row=0, column=0, pady=10)
+
+	botonProvincia = tk.Button(ventanaReporte, text="Personas por provincia", width=20, height=2, command=ventanaReportesProvincia)
+	botonProvincia.grid(row=1, column=0, pady=10)
+
+	botonNacidos = tk.Button(ventanaReporte, text="Personas nacidas a partir de", width=20, height=2, command=ventanaReportesAnnos)
+	botonNacidos.grid(row=2, column=0, pady=10)
+
+	botonHospital = tk.Button(ventanaReporte, text="Personas por hospital", width=20, height=2,command=ventanaReportesHospital)
+	botonHospital.grid(row=3, column=0, pady=10)
+
+	botonSalir = tk.Button(ventanaReporte, text="Salir", width=20, height=2, command=ventanaReporte.destroy)
+	botonSalir.grid(row=4, column=0, pady=10)
 # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
 def ventanaDeInicio():
 	ventanaInicio = tk.Tk()
@@ -280,7 +376,7 @@ def ventanaDeInicio():
 	botonCertificadoNacimiento= tk.Button(ventanaInicio, text="Certificado de Nacimiento", width=20, height=2)
 	botonCertificadoNacimiento.grid(row=2, column=0, pady=10)
 
-	botonReportes = tk.Button(ventanaInicio, text="Reportes", width=20, height=2)
+	botonReportes = tk.Button(ventanaInicio, text="Reportes", width=20, height=2,command=ventanaDeReportes)
 	botonReportes.grid(row=3, column=0, pady=10)
 
 	botonSalir = tk.Button(ventanaInicio, text="Salir", width=20, height=2, command=ventanaInicio.destroy)
@@ -310,6 +406,8 @@ def ventanaDeRegistro():
 		usuarios = leerRegistro("Administradores.txt")
 		nombreUsuario = entryUsuario.get()
 		contrasennia = entryContra.get()
+		botonLimpiar.config(state="normal")
+		botonIngresar.config(state="disabled")
 		for credenciales in usuarios:
 			if credenciales[0] == nombreUsuario and credenciales[1] == contrasennia:
 				inicio = True
@@ -319,12 +417,18 @@ def ventanaDeRegistro():
 		if not inicio:	
 			messagebox.showwarning("Error","El usuario o contraseña no coinciden")
   
+	def limpiar():
+		entryUsuario.delete(0,tk.END)
+		entryContra.delete(0,tk.END)
+		botonLimpiar.config(state="disabled")
+		botonIngresar.config(state="normal")
+  
 	botonIngresar = tk.Button(ventanaRegistro, text="Ingresar", width=20, height=2, command=registrarse)
 	botonIngresar.place(x=40, y=120)
 
-	botonLimpiar = tk.Button(ventanaRegistro, text="Limpiar", width=20, height=2)
+	botonLimpiar = tk.Button(ventanaRegistro, text="Limpiar", width=20, height=2, state="disabled", command=limpiar)
 	botonLimpiar.place(x=200, y=120)
 
 	ventanaRegistro.mainloop()
  
-ventanaDeRegistroNacimiento()
+ventanaDeRegistro()
