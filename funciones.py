@@ -13,7 +13,6 @@ def obtenerCedulaNombre(lista):
     listaCedulaNombre = []
     for persona in lista:
         listaCedulaNombre.append([persona.getCedula(),str(persona.getNombre())+" "+str(persona.getApellido1())+" "+str(persona.getApellido2())])
-    print(listaCedulaNombre)
     return listaCedulaNombre   
         
 def separarMujeres(lista):
