@@ -490,7 +490,17 @@ def ventanaCertificado():
 
 	entryCitaAsiento = tk.Entry(ventanaCert, width=6, font=("Arial", 16))
 	entryCitaAsiento.place(x=234, y=60)
-
+	
+	def validarCedula():
+		if entryCitaProvincia.get().isdigit() and entryCitaTomo.get().isdigit() and entryCitaAsiento.get().isdigit():
+			if (1 <= int(entryCitaProvincia.get()) <= 9) and (len(entryCitaTomo.get()) == len(entryCitaAsiento.get()) == 4):
+				cedula = entryCitaProvincia.get() + "-" + entryCitaTomo.get() + "-" + entryCitaAsiento.get()
+				generarCertificadoHtml(cedula, registroPersonas)
+				generarCertificadoXml(cedula, listaPersonas)
+			else:
+				messagebox.showerror("Error","El primer digito de la cedula no puede ser menor a 1 o mayo a 9")
+		else:
+			messagebox.showerror("Error","La cedula debe ser en digitos")
 	botonanno = tk.Button(ventanaCert, text="Buscar", width=20, height=2, command="")
 	botonanno.grid(row=2, column=0, pady=10)
 
