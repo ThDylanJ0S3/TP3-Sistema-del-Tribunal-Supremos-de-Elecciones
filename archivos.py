@@ -144,3 +144,29 @@ def generarHTMLAnno(annos, listaPersonas):
             archivoAnno.write("</tr>")
 
         archivoAnno.write("</table></body></html>")
+
+def generarCertificadoHtml(persona):
+    contenido_html = f'''
+    <html>
+    <head>
+        <title>Certificado de Nacimiento</title>
+    </head>
+    <body>
+        <h1>Certificado de Nacimiento</h1>
+        <p>Dice que: {persona.nombre}</p>
+        <p>Sexo: {persona.sexo}</p>
+        <p>Nació en: {persona.lugar_nacimiento}</p>
+        <p>El día: {persona.fecha_nacimiento}</p>
+        <p>Padre: {persona.padre}</p>
+        <p>Nacionalidad: {persona.nacionalidad_padre}</p>
+        <p>Madre: {persona.madre}</p>
+        <p>Nacionalidad: {persona.nacionalidad_madre}</p>
+    </body>
+    </html>
+    '''
+
+    # Guardar el contenido en un archivo HTML
+    with open('certificado_nacimiento.html', 'w') as file:
+        file.write(contenido_html)
+
+    print("Se ha generado el archivo HTML 'certificado_nacimiento.html'")

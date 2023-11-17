@@ -455,6 +455,39 @@ def ventanaDeReportes():
 	botonSalir = tk.Button(ventanaReporte, text="Salir", width=20, height=2, command=ventanaReporte.destroy)
 	botonSalir.grid(row=4, column=0, pady=10)
 # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
+def ventanaCertificado():
+	ventanaCert = tk.Tk()
+	ventanaCert.title("Ventana Certificado")
+	ventanaCert.geometry("400x300")
+	ventanaCert.resizable(width=False, height=False)
+	ventanaCert.configure(bg="light gray")
+	ventanaCert.columnconfigure(0, weight=1)
+	ventanaCert.rowconfigure(1, weight=1)
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+	labelCedula = tk.Label(ventanaCert, text="Ingrese la cedula:", font=("Arial", 12), bg="light gray")
+	labelCedula.grid(row=0, column=0, pady=10)
+
+	entryCitaProvincia = tk.Entry(ventanaCert, width=3, font=("Arial", 16))
+	entryCitaProvincia.place(x=85, y=60)
+
+	labelGuion = tk.Label(ventanaCert, text="-", font=("Arial", 16), bg="light gray")
+	labelGuion.place(x=126, y=60)
+
+	entryCitaTomo = tk.Entry(ventanaCert, width=6, font=("Arial", 16))
+	entryCitaTomo.place(x=140, y=60)
+
+	labelGuion = tk.Label(ventanaCert, text="-", font=("Arial", 16), bg="light gray")
+	labelGuion.place(x=217, y=60)
+
+	entryCitaAsiento = tk.Entry(ventanaCert, width=6, font=("Arial", 16))
+	entryCitaAsiento.place(x=234, y=60)
+
+	botonanno = tk.Button(ventanaCert, text="Buscar", width=20, height=2, command="")
+	botonanno.grid(row=2, column=0, pady=10)
+
+	botonSalir = tk.Button(ventanaCert, text="Salir", width=20, height=2, command=ventanaCert.destroy)
+	botonSalir.grid(row=3, column=0, pady=10)
+# ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
 def ventanaDeInicio():
 	ventanaInicio = tk.Tk()
 	ventanaInicio.title("Ventana principal")
