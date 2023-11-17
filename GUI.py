@@ -182,27 +182,27 @@ def ventanaDeRegistroNacimiento():
 	labelDia.grid(row=7, column=0, pady=13)
 
 	dias = [str(i) for i in range(1,32)]
-	comboDias = ttk.Combobox(ventanaRegistroNacimiento, values=dias, font=("Arial", 16))
+	comboDias = ttk.Combobox(ventanaRegistroNacimiento, values=dias, font=("Arial", 16), state="readonly")
 	comboDias.grid(row=7, column=1, pady=13)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelMeses = tk.Label(ventanaRegistroNacimiento, text="Mes:", font=("Arial", 12), bg="light gray")
 	labelMeses.grid(row=8, column=0, pady=13)
 
-	meses = [str(i) for i in range(1,12)]
-	comboMeses = ttk.Combobox(ventanaRegistroNacimiento, values=meses, font=("Arial", 16))
+	meses = [str(i) for i in range(1,13)]
+	comboMeses = ttk.Combobox(ventanaRegistroNacimiento, values=meses, font=("Arial", 16), state="readonly")
 	comboMeses.grid(row=8, column=1, pady=13)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelAnnos = tk.Label(ventanaRegistroNacimiento, text="Año:", font=("Arial", 12), bg="light gray")
 	labelAnnos.grid(row=9, column=0, pady=13)
 
-	comboAnnos = ttk.Combobox(ventanaRegistroNacimiento, values=annos, font=("Arial", 16))
+	comboAnnos = ttk.Combobox(ventanaRegistroNacimiento, values=annos, font=("Arial", 16), state="readonly")
 	comboAnnos.grid(row=9, column=1, pady=13)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelPadre = tk.Label(ventanaRegistroNacimiento, text="Padre:", font=("Arial", 12), bg="light gray")
 	labelPadre.grid(row=10, column=0, pady=13)
 
 	lHombres = [str(str(persona.getNombre())+" "+str(persona.getApellido1())+" "+str(persona.getApellido2())) for persona in listaHombres]
-	comboPadre = ttk.Combobox(ventanaRegistroNacimiento, values=lHombres, font=("Arial", 16))
+	comboPadre = ttk.Combobox(ventanaRegistroNacimiento, values=lHombres, font=("Arial", 16), state="readonly")
 	comboPadre.grid(row=10, column=1, pady=13)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelNacionalidadPadre = tk.Label(ventanaRegistroNacimiento, text="Nacionalidad:", font=("Arial", 12), bg="light gray")
@@ -215,7 +215,7 @@ def ventanaDeRegistroNacimiento():
 	labelMadre.grid(row=12, column=0, pady=13)
 
 	lMujeres = [str(str(persona.getNombre())+" "+str(persona.getApellido1())+" "+str(persona.getApellido2())) for persona in listaMujeres]
-	comboMadre = ttk.Combobox(ventanaRegistroNacimiento, values=lMujeres, font=("Arial", 16))
+	comboMadre = ttk.Combobox(ventanaRegistroNacimiento, values=lMujeres, font=("Arial", 16), state="readonly")
 	comboMadre.grid(row=12, column=1, pady=13)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelNacionalidadMadre = tk.Label(ventanaRegistroNacimiento, text="Nacionalidad:", font=("Arial", 12), bg="light gray")
@@ -292,10 +292,7 @@ def ventanaDeRegistroNacimiento():
 						nacionalidadMadre=nacionalidadMadre
 
 					)
-					if nuevaPersona.getSexo() == "F":
-						listaMujeres.append(nuevaPersona)
-					else:
-						listaHombres.append(nuevaPersona)
+
 					registroPersonas.append(nuevaPersona)
 					
 					for i in registroPersonas:
@@ -306,6 +303,7 @@ def ventanaDeRegistroNacimiento():
 				messagebox.showerror("Error","El primer digito de la cedula no puede ser menor a 1 o mayo a 9")
 		else:
 			messagebox.showerror("Error","La cedula debe ser en digitos")
+
 	botonRegistrar = tk.Button(ventanaRegistroNacimiento, text="Registrar", width=12, height=1, font=("Arial", 12), command=registrarPersona)
 	botonRegistrar.grid(row=14, column=0, pady=10)
 
@@ -490,7 +488,7 @@ def ventanaCertificado():
 
 	entryCitaAsiento = tk.Entry(ventanaCert, width=6, font=("Arial", 16))
 	entryCitaAsiento.place(x=234, y=60)
-	
+ 
 	def validarCedula():
 		if entryCitaProvincia.get().isdigit() and entryCitaTomo.get().isdigit() and entryCitaAsiento.get().isdigit():
 			if (1 <= int(entryCitaProvincia.get()) <= 9) and (len(entryCitaTomo.get()) == len(entryCitaAsiento.get()) == 4):
@@ -501,8 +499,9 @@ def ventanaCertificado():
 				messagebox.showerror("Error","El primer digito de la cedula no puede ser menor a 1 o mayo a 9")
 		else:
 			messagebox.showerror("Error","La cedula debe ser en digitos")
-	botonanno = tk.Button(ventanaCert, text="Buscar", width=20, height=2, command="")
-	botonanno.grid(row=2, column=0, pady=10)
+
+	botonCertificado = tk.Button(ventanaCert, text="Buscar", width=20, height=2, command=validarCedula)
+	botonCertificado.grid(row=2, column=0, pady=10)
 
 	botonSalir = tk.Button(ventanaCert, text="Salir", width=20, height=2, command=ventanaCert.destroy)
 	botonSalir.grid(row=3, column=0, pady=10)
@@ -522,7 +521,7 @@ def ventanaDeInicio():
 	botonMostrarArbolGenealogico = tk.Button(ventanaInicio, text="Mostrar Árbol Genealógico", width=20, height=2, command=mostrarArbolGenealogico)
 	botonMostrarArbolGenealogico.grid(row=1, column=0, pady=10)
 
-	botonCertificadoNacimiento= tk.Button(ventanaInicio, text="Certificado de Nacimiento", width=20, height=2)
+	botonCertificadoNacimiento= tk.Button(ventanaInicio, text="Certificado de Nacimiento", width=20, height=2, command=ventanaCertificado)
 	botonCertificadoNacimiento.grid(row=2, column=0, pady=10)
 
 	botonReportes = tk.Button(ventanaInicio, text="Reportes", width=20, height=2,command=ventanaDeReportes)
