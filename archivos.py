@@ -145,28 +145,100 @@ def generarHTMLAnno(annos, listaPersonas):
 
         archivoAnno.write("</table></body></html>")
 
-def generarCertificadoHtml(persona):
-    contenido_html = f'''
-    <html>
-    <head>
-        <title>Certificado de Nacimiento</title>
-    </head>
-    <body>
-        <h1>Certificado de Nacimiento</h1>
-        <p>Dice que: {persona.nombre}</p>
-        <p>Sexo: {persona.sexo}</p>
-        <p>Nació en: {persona.lugar_nacimiento}</p>
-        <p>El día: {persona.fecha_nacimiento}</p>
-        <p>Padre: {persona.padre}</p>
-        <p>Nacionalidad: {persona.nacionalidad_padre}</p>
-        <p>Madre: {persona.madre}</p>
-        <p>Nacionalidad: {persona.nacionalidad_madre}</p>
-    </body>
-    </html>
-    '''
+def generarCertificadoHtml(cedula, listaPersonas):
+    persona = None
 
-    # Guardar el contenido en un archivo HTML
-    with open('certificado_nacimiento.html', 'w') as file:
-        file.write(contenido_html)
+    # Buscar la persona con la cédula proporcionada en la lista
+    for p in listaPersonas:
+        if p.getCedula() == cedula:
+            persona = p
+            break
 
-    print("Se ha generado el archivo HTML 'certificado_nacimiento.html'")
+    if persona:
+        contenidoHtml = f'''
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Certificado de Nacimiento</title>
+            <style>
+                body {{
+                    font-family: Arial, sans-serif;
+                    margin: 20px;
+                }}
+                h1 {{
+                    text-align: center;
+                }}
+                table {{
+                    width: 70%;
+                    margin: auto;
+                    border-collapse: collapse;
+                }}
+                th, td {{
+                    padding: 8px;
+                    border-bottom: 1px solid #ddd;
+                    text-align: left;
+                }}
+                th {{
+                    background-color: #f2f2f2;
+                }}
+            </style>
+        </head>
+        <body>
+            <h1>Certificado de Nacimiento</h1>
+            <table>
+                <tr>
+                    <th>Al tomo:</th>
+                    <td>{persona.getCedula().split("-")[1]}</td>
+                </tr>
+                <tr>
+                    <th>Asiento:</th>
+                    <td>{persona.getCedula().split("-")[2]}</td>
+                </tr>
+                <tr>
+                    <th>Cita:</th>
+                    <td>{persona.getCedula()}</td>
+                </tr>
+                <tr>
+                    <th>Dice que:</th>
+                    <td>{persona.getNombre()} {persona.getApellido1()} {persona.getApellido2()}</td>
+                </tr>
+                <tr>
+                    <th>Sexo:</th>
+                    <td>{persona.getSexo()}</td>
+                </tr>
+                <tr>
+                    <th>Nació en:</th>
+                    <td>{persona.getLocalidad()}</td>
+                </tr>
+                <tr>
+                    <th>El día:</th>
+                    <td>{persona.getFechaNacimiento()}</td>
+                </tr>
+                <tr>
+                    <th>Padre:</th>
+                    <td>{persona.getPadre()}</td>
+                </tr>
+                <tr>
+                    <th>Nacionalidad:</th>
+                    <td>{persona.getNacionalidadPadre()}</td>
+                </tr>
+                <tr>
+                    <th>Madre:</th>
+                    <td>{persona.getMadre()}</td>
+                </tr>
+                <tr>
+                    <th>Nacionalidad:</th>
+                    <td>{persona.getNacionalidadMadre()}</td>
+                </tr>
+            </table>
+        </body>
+        </html>
+        '''
+
+        # Guardar el contenido en un archivo HTML
+        with open('certificadoNacimiento.html', 'w') as file:
+            file.write(contenidoHtml)
+
+        print("Se ha generado el archivo HTML 'certificadoNacimiento.html'")
+    else:
+        print("La persona con la cédula proporcionada no está en la lista")
