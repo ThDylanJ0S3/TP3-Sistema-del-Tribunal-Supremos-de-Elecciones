@@ -67,6 +67,25 @@ def leerRegistro(nombreArch):
 
 
 def generarHTMLProvincia(nProvincia, provincia, listaPersonas):
+    """
+    Función: Genera un archivo HTML con detalles de personas por provincia.
+
+    Esta función crea un archivo HTML que muestra una tabla con información detallada de las personas pertenecientes a una provincia específica.
+
+    - Entrada:
+        - nProvincia: Número de la provincia.
+        - provincia: Nombre de la provincia.
+        - listaPersonas: Lista de objetos que contienen información de las personas registradas.
+
+    - Acciones:
+        - Crea un archivo HTML con un encabezado y una tabla.
+        - Filtra las personas de la lista por la provincia especificada.
+        - Ordena la lista de personas según el sexo y el nombre.
+        - Crea una tabla con detalles como cédula, nombre completo, fecha de nacimiento y sexo de cada persona.
+        - Guarda el archivo HTML en el directorio actual.
+
+    Nota: La información mostrada en la tabla está organizada por columnas que incluyen cédula, nombre completo, fecha de nacimiento y sexo.
+    """
     with open(f"./personasPorProvincia.html","w", encoding="utf-8") as archivo:
             archivo.write("<meta charset='UTF-8'>")
             archivo.write("<html><head><title>Personas por Provincia</title></head><body>")
@@ -105,6 +124,24 @@ def generarHTMLProvincia(nProvincia, provincia, listaPersonas):
 
 
 def generarHTMLAnno(anno, listaPersonas, listaAnnios):
+    """
+    Función: Genera un archivo HTML con detalles de personas nacidas a partir de un año específico.
+
+    Esta función crea un archivo HTML que muestra información detallada de personas nacidas a partir del año especificado.
+
+    - Entrada:
+        - anno: Año a partir del cual se desea filtrar la información.
+        - listaPersonas: Lista de objetos que contienen información de las personas registradas.
+        - listaAnnios: Lista de años registrados en el conjunto de personas.
+
+    - Acciones:
+        - Crea un archivo HTML con un encabezado y secciones para cada año desde el especificado hasta el año más reciente.
+        - Filtra las personas por año de nacimiento.
+        - Organiza la información por columnas que incluyen cédula, nombre completo, fecha de nacimiento, sexo, nombre del padre y nombre de la madre.
+        - Guarda el archivo HTML en el directorio actual.
+
+    Nota: La información en la tabla está organizada por años, mostrando detalles como cédula, nombre completo, fecha de nacimiento, sexo, nombre del padre y nombre de la madre para cada persona nacida a partir del año especificado.
+    """
     with open(f"./personasPorAño{anno}.html","w", encoding="utf-8") as archivoAnno:
         archivoAnno.write("<meta charset='UTF-8'>")
         archivoAnno.write("<html><head><title>Personas por Año</title></head><body>")
@@ -150,6 +187,22 @@ def generarHTMLAnno(anno, listaPersonas, listaAnnios):
             archivoAnno.write("</table></body></html>")
             
 def generarHTMLTomo(tomo, listaPersonas):
+    """
+    Función: Genera un archivo HTML con detalles de personas por tomo de cédula.
+
+    Esta función crea un archivo HTML que muestra información detallada de personas asociadas a un tomo específico de la cédula de identidad.
+
+    - Entrada:
+        - tomo: Número correspondiente al tomo de la cédula de identidad.
+        - listaPersonas: Lista de objetos que contienen información de las personas registradas.
+
+    - Acciones:
+        - Crea un archivo HTML con un encabezado que muestra el tomo específico.
+        - Filtra y muestra la información de personas asociadas al tomo de la cédula, organizando los datos en una tabla que incluye cédula, nombre completo, fecha de nacimiento, sexo, nombre de la madre y nombre del padre.
+        - Guarda el archivo HTML en el directorio actual.
+
+    Nota: La tabla muestra información organizada por cédula, nombre completo, fecha de nacimiento, sexo, nombre de la madre y nombre del padre para cada persona asociada al tomo de la cédula especificado.
+    """
     with open(f"./personasPorTomo.html","w", encoding="utf-8") as archivo:
             archivo.write("<meta charset='UTF-8'>")
             archivo.write("<html><head><title>Personas por Provincia</title></head><body>")
@@ -191,6 +244,26 @@ def generarHTMLTomo(tomo, listaPersonas):
             archivo.close()
             
 def generarCertificadoHtml(cedula, listaPersonas):
+    """
+    Función: Genera un certificado de nacimiento en formato HTML.
+
+    Esta función crea un archivo HTML que contiene información detallada sobre el nacimiento de una persona, identificada por su número de cédula.
+
+    - Entrada:
+        - cedula: Número de cédula de la persona para la que se genera el certificado.
+        - listaPersonas: Lista de objetos que contienen información de las personas registradas.
+
+    - Acciones:
+        - Busca la persona asociada a la cédula proporcionada en la lista de personas.
+        - Si encuentra la persona:
+            - Crea un archivo HTML que muestra información detallada sobre el nacimiento de la persona, incluyendo su tomo, asiento, nombre completo, sexo, localidad de nacimiento, fecha de nacimiento, nombres de los padres y nacionalidades.
+            - Guarda el archivo HTML con el nombre 'certificadoNacimiento.html' en el directorio actual.
+        - Si no encuentra la persona:
+            - Imprime un mensaje indicando que la persona con la cédula proporcionada no está en la lista.
+
+    Nota: El archivo HTML generado contiene información detallada sobre el nacimiento de la persona, organizada en una tabla con las siguientes secciones: tomo, asiento, cédula, nombre completo, sexo, localidad de nacimiento, fecha de nacimiento, nombre del padre con su nacionalidad, nombre de la madre con su nacionalidad.
+    """
+
     persona = None
 
     # Buscar la persona con la cédula proporcionada en la lista
@@ -289,6 +362,25 @@ def generarCertificadoHtml(cedula, listaPersonas):
         print("La persona con la cédula proporcionada no está en la lista")
         
 def generarCertificadoXml(cedula, listaPersonas):
+    """
+    Función: Genera un certificado de nacimiento en formato XML.
+
+    Esta función crea un archivo XML que contiene información detallada sobre el nacimiento de una persona, identificada por su número de cédula.
+
+    - Entrada:
+        - cedula: Número de cédula de la persona para la que se genera el certificado.
+        - listaPersonas: Lista de objetos que contienen información de las personas registradas.
+
+    - Acciones:
+        - Busca la persona asociada a la cédula proporcionada en la lista de personas.
+        - Si encuentra la persona:
+            - Crea una estructura XML que contiene información detallada sobre el nacimiento de la persona, incluyendo su tomo, asiento, cédula, nombre completo, sexo, localidad de nacimiento, fecha de nacimiento, nombres de los padres y nacionalidades.
+            - Guarda el archivo XML con el nombre 'certificadoNacimiento.xml' en el directorio actual.
+        - Si no encuentra la persona:
+            - Imprime un mensaje indicando que la persona con la cédula proporcionada no está en la lista.
+
+    Nota: El archivo XML generado contiene información detallada sobre el nacimiento de la persona, estructurada con etiquetas que incluyen el tomo, asiento, cédula, nombre completo, sexo, localidad de nacimiento, fecha de nacimiento, nombre del padre con su nacionalidad, nombre de la madre con su nacionalidad.
+    """
     persona = None
 
     for p in listaPersonas:

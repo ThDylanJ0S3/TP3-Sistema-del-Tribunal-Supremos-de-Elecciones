@@ -29,7 +29,38 @@ annoActual = datetime.now().year
 annos = [str(i) for i in range(1900, annoActual + 1)]
 Variablesexo = "M"
 
-def mostrarArbolGenealogico():    
+def mostrarArbolGenealogico():
+	"""
+    Función: Abre una ventana para mostrar el árbol genealógico.
+    
+    Esta función crea una interfaz gráfica utilizando Tkinter para mostrar información del árbol genealógico.
+
+    Ventana:
+        - Título: "Árbol Genealógico"
+        - Tamaño: 600x400 píxeles
+        - No es redimensionable
+        - Fondo: gris claro
+
+    Componentes de la interfaz:
+        - Etiqueta "Mostrar Árbol Genealógico" en fuente Arial de tamaño 17.
+        - Etiqueta "Persona:" en fuente Arial de tamaño 12.
+        - Cuadro combinado para seleccionar una persona.
+        - Etiqueta "Resultado de la búsqueda:" en fuente Arial de tamaño 12.
+        - Entradas de solo lectura para mostrar el padre, la madre y el hijo.
+        - Botón "Mostrar" para realizar la búsqueda y mostrar la información.
+        - Botón "Limpiar" para borrar la información mostrada.
+        - Botón "Regresar" para cerrar la ventana.
+
+    Funcionalidades:
+        - El botón "Mostrar" activa una búsqueda y muestra la información correspondiente a la persona seleccionada.
+        - El botón "Limpiar" borra la información mostrada en las entradas.
+        - El botón "Regresar" cierra la ventana del árbol genealógico.
+
+    Variables globales utilizadas:
+        - listaPersonas: Lista de personas.
+        - listaCedulas: Lista de cédulas de personas.
+
+    """   
 	ventanaArbolGenealogico = tk.Tk()
 	ventanaArbolGenealogico.title("Ventana de registro")
 	ventanaArbolGenealogico.geometry("600x400")
@@ -64,6 +95,28 @@ def mostrarArbolGenealogico():
 	entryHijo.place(x=207, y=330)
  
 	def mostrarResultadoBusqueda():
+		"""
+	    Función: Realiza una búsqueda y muestra el árbol genealógico de una persona seleccionada.
+
+	    Esta función recoge la selección de una persona en la interfaz gráfica y busca su información en la lista de personas.
+	    Después, muestra el árbol genealógico de esa persona en las entradas correspondientes.
+
+	    Funcionalidades:
+	        - Obtiene la persona seleccionada del cuadro combinado.
+	        - Busca la información de la persona en la lista de personas.
+	        - Muestra el árbol genealógico de la persona en las entradas respectivas.
+	        - Deshabilita el botón "Mostrar" y habilita el botón "Limpiar".
+
+	    Variables utilizadas (globales):
+	        - listaPersonas: Lista de personas.
+	        - comboPersona: Cuadro combinado que contiene la lista de personas.
+	        - entryHijo: Entrada para mostrar el nombre del hijo.
+	        - entryMadreMostrar: Entrada para mostrar el nombre de la madre.
+	        - entryPadreMostrar: Entrada para mostrar el nombre del padre.
+	        - botonMostrar: Botón para iniciar la búsqueda.
+	        - botonLimpiar: Botón para limpiar la información mostrada.
+
+    	"""
 		hijo = comboPersona.get()
 		for persona in registroPersonas:
 			if hijo[0:11] == persona.getCedula():
@@ -83,6 +136,27 @@ def mostrarArbolGenealogico():
 	botonMostrar.place(x=140, y=131)
 
 	def limpiarEntradas():
+		"""
+	    Función: Limpia las entradas de la interfaz gráfica del árbol genealógico.
+
+	    Esta función restablece las entradas de la interfaz gráfica del árbol genealógico
+	    para dejarlas en su estado inicial, desactivando la edición y borrando los contenidos.
+
+	    Acciones realizadas:
+	        - Habilita las entradas para edición con un ancho de 14 caracteres.
+	        - Borra el contenido de las entradas.
+	        - Desactiva la edición de las entradas.
+	        - Deshabilita el botón "Limpiar".
+	        - Habilita el botón "Mostrar".
+
+	    Variables utilizadas (globales):
+	        - entryHijo: Entrada para mostrar el nombre del hijo.
+	        - entryMadreMostrar: Entrada para mostrar el nombre de la madre.
+	        - entryPadreMostrar: Entrada para mostrar el nombre del padre.
+	        - botonLimpiar: Botón para limpiar la información mostrada.
+	        - botonMostrar: Botón para iniciar la búsqueda.
+
+	    """
 		entryHijo.config(state="normal", width=14)
 		entryMadreMostrar.config(state="normal", width=14)
 		entryPadreMostrar.config(state="normal", width=14)
@@ -102,6 +176,36 @@ def mostrarArbolGenealogico():
 	botonRegresar.place(x=420, y=131)
 # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #	
 def ventanaDeRegistroNacimiento():
+	"""
+    Función: Crea una interfaz para registrar información de un nacimiento.
+
+    Esta función crea una interfaz gráfica utilizando Tkinter para registrar información
+    relacionada con el nacimiento de una persona, incluyendo datos personales, padres y más.
+
+    Elementos de la interfaz:
+        - Campos para la cita de nacimiento.
+        - Campos para el nombre y apellidos.
+        - Selección de sexo mediante radio botones.
+        - Campos para la ubicación (distrito, cantón, provincia).
+        - Selección de fecha de nacimiento.
+        - Selección del padre y la madre.
+        - Selección de la nacionalidad de los padres.
+        - Botones para registrar, limpiar y regresar.
+
+    Acciones:
+        - Permite ingresar datos relacionados con el nacimiento.
+        - Valida la cédula y otros campos antes de registrar.
+        - Muestra mensajes de error en caso de datos incorrectos o faltantes.
+        - Almacena la información ingresada en una lista de registros.
+
+    Variables utilizadas (globales):
+        - annos: Lista de años para selección.
+        - provincia: Lista de provincias para selección.
+        - listaHombres: Lista de hombres registrados.
+        - listaMujeres: Lista de mujeres registradas.
+        - Variablesexo: Variable global para almacenar el sexo seleccionado.
+
+    """
 	ventanaRegistroNacimiento = tk.Tk()
 	ventanaRegistroNacimiento.title("Ventana de registro")
 	ventanaRegistroNacimiento.geometry("570x820")
@@ -151,6 +255,19 @@ def ventanaDeRegistroNacimiento():
 	labelSexo.grid(row=3, column=0, pady=13)
 
 	def asignarSexo(sexo):
+		"""
+	    Función: Asigna el sexo seleccionado a una variable global.
+
+	    Esta función se utiliza para asignar el sexo seleccionado (femenino o masculino)
+	    a una variable global llamada Variablesexo.
+
+	    Argumentos:
+	        - sexo (str): El sexo seleccionado ("F" para femenino, "M" para masculino).
+
+	    Variables utilizadas (globales):
+	        - Variablesexo: Variable global para almacenar el sexo seleccionado.
+
+	    """
 		global Variablesexo
 		Variablesexo = sexo
   
@@ -227,6 +344,26 @@ def ventanaDeRegistroNacimiento():
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 
 	def registrarPersona():
+		"""
+	    Función: Registra una nueva persona con los datos proporcionados.
+
+	    Esta función se encarga de validar y registrar una nueva persona con los datos ingresados en los campos de la ventana de registro.
+
+	    - Verifica la validez de la cédula ingresada y los datos básicos de la persona.
+	    - Asigna valores a las variables necesarias para crear una nueva instancia de la clase Persona.
+	    - Crea una nueva instancia de Persona con los datos proporcionados y la añade a la lista de registroPersonas.
+	    - Muestra los datos de todas las personas registradas hasta el momento.
+
+	    Requiere que los campos de la ventana de registro estén correctamente llenados.
+
+	    Argumentos:
+	        No tiene argumentos, pero hace uso de los datos ingresados en la interfaz gráfica.
+
+	    Variables utilizadas (globales):
+	        - Variablesexo: Variable global para almacenar el sexo seleccionado.
+	        - registroPersonas: Lista que almacena las instancias de la clase Persona.
+
+	    """
 		if entryCitaProvincia.get().isdigit() and entryCitaTomo.get().isdigit() and entryCitaAsiento.get().isdigit():
 			if (1 <= int(entryCitaProvincia.get()) <= 9) and (len(entryCitaTomo.get()) == len(entryCitaAsiento.get()) == 4):
 				try:
@@ -312,6 +449,16 @@ def ventanaDeRegistroNacimiento():
 	botonRegistrar.grid(row=14, column=0, pady=10)
 
 	def limpiarDatos():
+		"""
+		Función: Limpia los datos de la interfaz de registro.
+
+		Esta función borra los datos ingresados en varios campos de la interfaz de registro.
+
+		- Acciones:
+		    - Borra el contenido de los campos de entrada relacionados con la cita (provincia, tomo, asiento).
+		    - Elimina los datos ingresados en los campos de nombre, apellidos, distrito y cantón.
+		    - Restablece a un estado vacío los campos de selección (provincia, días, meses, años, padres y nacionalidades).
+		"""
 		entryCitaProvincia.delete(0, 'end')
 		entryCitaTomo.delete(0, 'end')
 		entryCitaAsiento.delete(0, 'end')
@@ -337,52 +484,107 @@ def ventanaDeRegistroNacimiento():
 	botonRegresar.grid(row=14, column=2, pady=10)
  # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
 def ventanaReportesProvincia():
-    ventanaReporte = tk.Tk()
-    ventanaReporte.title("Ventana principal")
-    ventanaReporte.geometry("400x300")
-    ventanaReporte.resizable(width=False, height=False)
-    ventanaReporte.configure(bg="light gray")
-    ventanaReporte.columnconfigure(0, weight=1)
-    ventanaReporte.rowconfigure(1, weight=1)
-    global provincia
+	"""
+    Función: Crea una ventana para generar reportes por provincia.
+
+    Esta función despliega una ventana que permite al usuario seleccionar una provincia y generar un reporte en HTML
+    que contiene información relacionada con personas registradas en la provincia seleccionada.
+
+    - Interfaz gráfica: Se presenta una ventana con un Combobox para elegir la provincia y botones para generar y salir.
+
+    Argumentos:
+        No recibe argumentos.
+
+    Variables utilizadas (globales):
+        - provincia: Lista de nombres de provincias.
+        - registroPersonas: Lista de objetos de personas registradas.
+
+    Acciones:
+        - Crea una nueva ventana de reportes.
+        - Muestra un Combobox para seleccionar la provincia.
+        - El botón 'Crear' genera un reporte en HTML basado en la provincia seleccionada y los datos registrados.
+        - El botón 'Salir' cierra la ventana de reportes.
+
+    """
+	ventanaReporte = tk.Tk()
+	ventanaReporte.title("Ventana principal")
+	ventanaReporte.geometry("400x300")
+	ventanaReporte.resizable(width=False, height=False)
+	ventanaReporte.configure(bg="light gray")
+	ventanaReporte.columnconfigure(0, weight=1)
+	ventanaReporte.rowconfigure(1, weight=1)
+	global provincia
 # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
-    labelReport = tk.Label(ventanaReporte, text="Provincias", font=("Arial", 12), bg="light gray")
-    labelReport.grid(row=0, column=0, pady=10)
+	labelReport = tk.Label(ventanaReporte, text="Provincias", font=("Arial", 12), bg="light gray")
+	labelReport.grid(row=0, column=0, pady=10)
 
-    entryProvinciaVar = tk.StringVar() 
-    entryProvincia = ttk.Combobox(ventanaReporte,values=provincia, width=21, font=("Arial", 16), state="readonly", textvariable=entryProvinciaVar)
-    entryProvincia.grid(row=1, column=0, pady=10)
+	entryProvinciaVar = tk.StringVar() 
+	entryProvincia = ttk.Combobox(ventanaReporte,values=provincia, width=21, font=("Arial", 16), state="readonly", textvariable=entryProvinciaVar)
+	entryProvincia.grid(row=1, column=0, pady=10)
 
-    valorPredeterminado = "San José"
-    if valorPredeterminado in provincia:
-        entryProvincia.current(provincia.index(valorPredeterminado))
+	valorPredeterminado = "San José"
+	if valorPredeterminado in provincia:
+		entryProvincia.current(provincia.index(valorPredeterminado))
 
-    def crearRep():
-        prov = "1"
-        if entryProvincia.get() == "San José":
-            prov = "1" 
-        elif entryProvincia.get() == "Alajuela":
-            prov = "2"
-        elif entryProvincia.get() =="Cartago":
-            prov = "3"
-        elif entryProvincia.get() =="Heredia":
-            prov = "4"
-        elif entryProvincia.get() =="Guanacaste":
-            prov = "5"
-        elif entryProvincia.get() =="Puntarenas":
-            prov = "6"
-        elif entryProvincia.get() =="Limón":
-            prov = "7"
-        generarHTMLProvincia(prov, entryProvincia.get(), registroPersonas)
-        messagebox.showinfo("Exito","El archivo ha sido creado")
+	def crearRep():
+		"""
+		Función: Genera un archivo HTML basado en la provincia seleccionada.
 
-    botonCrear = tk.Button(ventanaReporte, text="Crear", width=20,height=2, command=crearRep)
-    botonCrear.grid(row=2,column=0,pady=10)
+		Esta función toma la provincia seleccionada en la interfaz gráfica, la convierte en un código correspondiente
+		y utiliza esta información para generar un archivo HTML que contiene datos de personas registradas en la provincia.
 
-    botonSalir = tk.Button(ventanaReporte, text="Salir", width=20, height=2, command=ventanaReporte.destroy)
-    botonSalir.grid(row=3, column=0, pady=10)
+		- Argumentos: No recibe argumentos.
+
+		Acciones:
+		    - Mapea el nombre de la provincia seleccionada a su código correspondiente.
+		    - Llama a la función 'generarHTMLProvincia()' con el código de la provincia, el nombre de la provincia y
+		      la lista de personas registradas.
+		    - Muestra un mensaje de éxito informando que se ha creado el archivo HTML.
+
+		"""
+		prov = "1"
+		if entryProvincia.get() == "San José":
+		    prov = "1" 
+		elif entryProvincia.get() == "Alajuela":
+		    prov = "2"
+		elif entryProvincia.get() =="Cartago":
+		    prov = "3"
+		elif entryProvincia.get() =="Heredia":
+		    prov = "4"
+		elif entryProvincia.get() =="Guanacaste":
+		    prov = "5"
+		elif entryProvincia.get() =="Puntarenas":
+		    prov = "6"
+		elif entryProvincia.get() =="Limón":
+		    prov = "7"
+		generarHTMLProvincia(prov, entryProvincia.get(), registroPersonas)
+		messagebox.showinfo("Exito","El archivo ha sido creado")
+
+	botonCrear = tk.Button(ventanaReporte, text="Crear", width=20,height=2, command=crearRep)
+	botonCrear.grid(row=2,column=0,pady=10)
+
+	botonSalir = tk.Button(ventanaReporte, text="Salir", width=20, height=2, command=ventanaReporte.destroy)
+	botonSalir.grid(row=3, column=0, pady=10)
  # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
 def ventanaReportesAnnos():
+	"""
+    Función: Abre una ventana para generar un reporte según el año ingresado.
+
+    Esta función abre una interfaz gráfica que permite al usuario ingresar un año.
+    Luego, al presionar el botón 'Personas por año', recopila los años de nacimiento
+    de las personas registradas y genera un reporte en HTML para el año ingresado.
+
+    - Argumentos: No recibe argumentos.
+
+    Acciones:
+        - Abre una ventana gráfica con la opción de ingresar un año.
+        - Al presionar el botón 'Personas por año':
+            - Verifica si el año ingresado es válido.
+            - Recopila los años de nacimiento de las personas registradas.
+            - Genera un archivo HTML que contiene datos de personas nacidas en el año ingresado.
+            - Muestra un mensaje de éxito si se genera el reporte correctamente, o un error si el año ingresado no es válido.
+
+    """
 	ventanaReporte = tk.Tk()
 	ventanaReporte.title("Ventana principal")
 	ventanaReporte.geometry("400x300")
@@ -392,6 +594,21 @@ def ventanaReportesAnnos():
 	ventanaReporte.rowconfigure(1, weight=1)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	def crearRep():
+		"""
+	    Función: Crea un reporte según el año ingresado.
+
+	    Esta función recopila los años de nacimiento de las personas registradas y genera un reporte en HTML
+	    para el año ingresado por el usuario.
+
+	    - Acciones:
+	        - Recopila los años de nacimiento de las personas registradas.
+	        - Verifica si el año ingresado es válido.
+	        - Si el año es válido:
+	            - Genera un archivo HTML que contiene datos de personas nacidas en el año ingresado.
+	            - Muestra un mensaje de éxito indicando que se generó el reporte para el año ingresado.
+	        - Si el año no es válido:
+	            - Muestra un mensaje de error pidiendo al usuario que ingrese un año válido.
+	    """
 		listaAnnios = []
 		for persona in registroPersonas:
 			annio = persona.getFechaNacimiento().split("/")[2]
@@ -420,6 +637,17 @@ def ventanaReportesAnnos():
 	
  # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
 def ventanaReportesHospital():
+	"""
+	Función: Crea reportes de personas por hospital.
+
+	Esta función genera un reporte en HTML según el tomo de registro de las personas en el hospital.
+
+	- Acciones:
+	    - Crea una ventana para generar reportes por tomo de registro en el hospital.
+	    - Muestra una lista desplegable con los tomos disponibles de las personas registradas en el hospital.
+	    - Permite al usuario seleccionar un tomo y generar un reporte en HTML para las personas registradas en ese tomo.
+	    - Proporciona botones para crear el reporte o cerrar la ventana.
+	"""
 	ventanaReporte = tk.Tk()
 	ventanaReporte.title("Ventana principal")
 	ventanaReporte.geometry("400x300")
@@ -455,6 +683,17 @@ def ventanaReportesHospital():
 
  # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
 def ventanaDeReportes():
+	"""
+	Función: Abre una ventana principal para generar diferentes reportes.
+	    
+	Esta función crea una interfaz gráfica con botones que permiten al usuario generar varios tipos de reportes
+	relacionados con personas registradas.
+
+	- Acciones:
+	    - Crea una ventana con botones para generar reportes por provincia, año de nacimiento y hospital.
+	    - Los botones están vinculados a funciones específicas que generan diferentes tipos de informes.
+	    - Proporciona un botón para cerrar la ventana principal.
+	"""
 	ventanaReporte = tk.Tk()
 	ventanaReporte.title("Ventana principal")
 	ventanaReporte.geometry("400x300")
@@ -479,6 +718,19 @@ def ventanaDeReportes():
 	botonSalir.grid(row=4, column=0, pady=10)
 # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
 def ventanaCertificado():
+	"""
+	Función: Abre una ventana para generar certificados.
+
+	Esta función crea una ventana que permite al usuario ingresar una cédula y generar certificados en formatos HTML y XML
+	basados en la información asociada con la cédula proporcionada.
+
+	- Acciones:
+	    - Abre una ventana para ingresar la cédula en tres campos separados.
+	    - Permite al usuario generar certificados en HTML y XML haciendo uso de la cédula ingresada.
+	    - Verifica la validez de la cédula ingresada antes de generar los certificados.
+	    - Muestra un mensaje de error si la cédula no cumple con los criterios de validación.
+	    - Proporciona botones para buscar la información y para cerrar la ventana de certificados.
+	"""
 	ventanaCert = tk.Tk()
 	ventanaCert.title("Ventana Certificado")
 	ventanaCert.geometry("400x300")
@@ -506,6 +758,20 @@ def ventanaCertificado():
 	entryCitaAsiento.place(x=234, y=60)
  
 	def validarCedula():
+		"""
+		Función: Valida la cédula ingresada.
+
+		Esta función verifica la validez de una cédula ingresada en tres campos distintos: provincia, tomo y asiento.
+
+		- Acciones:
+		    - Verifica si los campos de provincia, tomo y asiento contienen únicamente dígitos.
+		    - Confirma que el primer dígito de la provincia esté entre 1 y 9.
+		    - Confirma que la longitud de los campos tomo y asiento sea 4.
+		    - Si la cédula es válida:
+		        - Genera un certificado HTML y XML utilizando los datos de la cédula y la lista de personas registradas.
+		    - Si la cédula no es válida:
+		        - Muestra un mensaje de error indicando que los datos ingresados no cumplen con los criterios necesarios.
+		"""
 		if entryCitaProvincia.get().isdigit() and entryCitaTomo.get().isdigit() and entryCitaAsiento.get().isdigit():
 			if (1 <= int(entryCitaProvincia.get()) <= 9) and (len(entryCitaTomo.get()) == len(entryCitaAsiento.get()) == 4):
 				cedula = entryCitaProvincia.get() + "-" + entryCitaTomo.get() + "-" + entryCitaAsiento.get()
@@ -523,6 +789,16 @@ def ventanaCertificado():
 	botonSalir.grid(row=3, column=0, pady=10)
 # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
 def ventanaDeInicio():
+	"""
+	Función: Crea la ventana principal del sistema.
+
+	Esta función genera la ventana principal con distintas opciones para interactuar con el sistema de registro de nacimientos.
+
+	- Acciones:
+	    - Crea una ventana principal para el sistema.
+	    - Incluye botones para registrar nacimientos, mostrar árbol genealógico, generar certificados de nacimiento, 
+	      acceder a informes y reportes, y salir del sistema.
+	"""
 	ventanaInicio = tk.Tk()
 	ventanaInicio.title("Ventana principal")
 	ventanaInicio.geometry("400x300")
@@ -547,6 +823,17 @@ def ventanaDeInicio():
 	botonSalir.grid(row=4, column=0, pady=10)
 # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
 def ventanaDeRegistro():
+	"""
+	Función: Crea la ventana de registro de usuarios.
+
+	Esta función genera una ventana donde se pueden ingresar credenciales de usuario para acceder al sistema de registro de nacimientos.
+
+	- Acciones:
+	    - Crea una ventana de registro con campos para ingresar nombre de usuario y contraseña.
+	    - Verifica las credenciales ingresadas.
+	    - Permite al usuario iniciar sesión si las credenciales coinciden con los datos almacenados.
+	    - Proporciona opciones para limpiar los campos y acceder al sistema.
+	"""
 	ventanaRegistro = tk.Tk()
 	ventanaRegistro.title("Ventana de registro")
 	ventanaRegistro.geometry("400x200")
@@ -566,6 +853,21 @@ def ventanaDeRegistro():
 	entryContra.place(x=120, y=60)
 	
 	def registrarse():
+		"""
+		Función: Verifica las credenciales de usuario para el acceso.
+
+		Esta función valida las credenciales ingresadas por el usuario al intentar iniciar sesión en el sistema de registro de nacimientos.
+
+		- Acciones:
+		    - Lee los datos de usuarios registrados desde el archivo "Administradores.txt".
+		    - Obtiene el nombre de usuario y la contraseña ingresados por el usuario.
+		    - Comprueba si las credenciales coinciden con los datos almacenados.
+		    - Si las credenciales son correctas:
+		        - Cierra la ventana actual de registro.
+		        - Abre la ventana principal del sistema de registro de nacimientos.
+		    - Si las credenciales son incorrectas:
+		        - Muestra un mensaje de advertencia indicando que las credenciales no coinciden.
+		"""
 		inicio = False
 		usuarios = leerRegistro("Administradores.txt")
 		nombreUsuario = entryUsuario.get()
@@ -582,6 +884,17 @@ def ventanaDeRegistro():
 			messagebox.showwarning("Error","El usuario o contraseña no coinciden")
   
 	def limpiar():
+		"""
+		Función: Limpia los campos de entrada del formulario de registro.
+
+		Esta función borra los datos ingresados en los campos de usuario y contraseña del formulario de registro y restablece
+		los botones para su uso normal.
+
+		- Acciones:
+		    - Borra el contenido de los campos de entrada para el usuario y la contraseña.
+		    - Deshabilita el botón "Limpiar" después de la limpieza.
+		    - Habilita el botón "Ingresar" para permitir nuevos intentos de inicio de sesión.
+		"""
 		entryUsuario.delete(0,tk.END)
 		entryContra.delete(0,tk.END)
 		botonLimpiar.config(state="disabled")

@@ -10,6 +10,23 @@ def cerrarVentana(ventana):
     ventana.destroy()
 
 def obtenerCedulaNombre(lista):
+    """
+    Función: Obtiene una lista de pares de cédula y nombre completo de personas.
+
+    Esta función recibe una lista de objetos que contienen información de personas registradas y devuelve una lista de listas, donde cada sublista contiene la cédula y el nombre completo de cada persona.
+
+    - Entrada:
+        - lista: Lista de objetos que contienen información de las personas registradas.
+
+    - Salida:
+        - listaCedulaNombre: Lista de listas, donde cada sublista contiene la cédula y el nombre completo de cada persona.
+
+    - Acciones:
+        - Itera sobre la lista de personas.
+        - Para cada persona en la lista, crea una sublista que contiene la cédula y el nombre completo (nombre, apellido1 y apellido2 concatenados) de la persona.
+        - Agrega cada sublista a una lista general.
+        - Devuelve la lista de listas que contiene la cédula y el nombre completo de cada persona.
+    """
     listaCedulaNombre = []
     for persona in lista:
         listaCedulaNombre.append([persona.getCedula(),str(persona.getNombre())+" "+str(persona.getApellido1())+" "+str(persona.getApellido2())])
