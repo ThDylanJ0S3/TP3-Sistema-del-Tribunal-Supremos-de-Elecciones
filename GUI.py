@@ -11,6 +11,7 @@ from clasePersona import *
 import datetime
 from funciones import *
 from archivos import *
+
 global annos
 global listaPersonas
 global listaCedulas
@@ -18,15 +19,15 @@ global listaHombres
 global listaMujeres
 global provincia
 global registroPersonas
-variableSexo = None
 listaPersonas = lee("PadresOriginales")
 listaCedulasNombre = obtenerCedulaNombre(listaPersonas)
 listaHombres = separarHombres(listaPersonas)
 listaMujeres = separarMujeres(listaPersonas)
 provincia = ["San José","Alajuela","Cartago","Heredia","Guanacaste","Puntarenas","Limón"]
-registroPersonas = []
+registroPersonas = listaPersonas
 annoActual = datetime.now().year
 annos = [str(i) for i in range(1900, annoActual + 1)]
+Variablesexo = "M"
 
 def mostrarArbolGenealogico():    
 	ventanaArbolGenealogico = tk.Tk()
@@ -53,13 +54,13 @@ def mostrarArbolGenealogico():
 	labelResultado = tk.Label(ventanaArbolGenealogico, text="Resultado de la búsqueda: ", font=("Arial", 12), bg="light gray")
 	labelResultado.place(x=40, y=201)	
 
-	entryPadreMostrar = tk.Entry(ventanaArbolGenealogico, width=14, font=("Arial", 16), state="disabled")
+	entryPadreMostrar = tk.Entry(ventanaArbolGenealogico, width=14, font=("Arial", 16), state="readonly")
 	entryPadreMostrar.place(x=100, y=236)
 
-	entryMadreMostrar = tk.Entry(ventanaArbolGenealogico, width=14, font=("Arial", 16), state="disabled")
+	entryMadreMostrar = tk.Entry(ventanaArbolGenealogico, width=14, font=("Arial", 16), state="readonly")
 	entryMadreMostrar.place(x=310, y=236)
 
-	entryHijo = tk.Entry(ventanaArbolGenealogico, width=14, font=("Arial", 16), state="disabled")
+	entryHijo = tk.Entry(ventanaArbolGenealogico, width=14, font=("Arial", 16), state="readonly")
 	entryHijo.place(x=207, y=330)
  
 	def mostrarResultadoBusqueda():
@@ -72,9 +73,9 @@ def mostrarArbolGenealogico():
 				entryHijo.insert(0,hijo[11:-1])
 				entryMadreMostrar.insert(0,str(persona.getMadre()))
 				entryPadreMostrar.insert(0,str(persona.getPadre()))
-				entryHijo.config(state="disabled")
-				entryMadreMostrar.config(state="disabled")
-				entryPadreMostrar.config(state="disabled")
+				entryHijo.config(state="readonly")
+				entryMadreMostrar.config(state="readonly")
+				entryPadreMostrar.config(state="readonly")
 				botonMostrar.config(state="disabled")
 				botonLimpiar.config(state="normal")
  
@@ -112,6 +113,8 @@ def ventanaDeRegistroNacimiento():
 	global provincia
 	global listaHombres
 	global listaMujeres
+	global Variablesexo
+ 
 	nacionalidades = ["Costarricense","Mexicana","Española","Argentina","Colombiana"]
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelCita = tk.Label(ventanaRegistroNacimiento, text="Cita:", font=("Arial", 12), bg="light gray")
@@ -122,7 +125,7 @@ def ventanaDeRegistroNacimiento():
 
 	labelGuion = tk.Label(ventanaRegistroNacimiento, text="-", font=("Arial", 16), bg="light gray")
 	labelGuion.place(x=201, y=13)
-
+         
 	entryCitaTomo = tk.Entry(ventanaRegistroNacimiento, width=6, font=("Arial", 16))
 	entryCitaTomo.place(x=220, y=13)
 
@@ -141,21 +144,20 @@ def ventanaDeRegistroNacimiento():
 	labelApellidos = tk.Label(ventanaRegistroNacimiento, text="Apellidos:", font=("Arial", 12), bg="light gray")
 	labelApellidos.grid(row=2, column=0, pady=13)
 
-	entryApellidos = tk.Entry(ventanaRegistroNacimiento, width=21, font=("Arial", 16), state="readonly")
+	entryApellidos = tk.Entry(ventanaRegistroNacimiento, width=21, font=("Arial", 16), state="disabled")
 	entryApellidos.grid(row=2, column=1, pady=13)
-
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelSexo = tk.Label(ventanaRegistroNacimiento, text="Sexo:", font=("Arial", 12), bg="light gray")
 	labelSexo.grid(row=3, column=0, pady=13)
 
 	def asignarSexo(sexo):
-		global variableSexo
-		variableSexo = sexo
-
-	radioFemenino = tk.Radiobutton(ventanaRegistroNacimiento, text="Femenino",variable=variableSexo ,value="F", font=("Arial", 15), bg="light gray", command=lambda: asignarSexo("F"))
+		global Variablesexo
+		Variablesexo = sexo
+  
+	radioFemenino = tk.Radiobutton(ventanaRegistroNacimiento, text="Femenino",variable=Variablesexo ,value="F", font=("Arial", 15), bg="light gray", command=lambda: asignarSexo("F"))
 	radioFemenino.place(x=294, y=166)
 
-	radioMasculino = tk.Radiobutton(ventanaRegistroNacimiento, text="Masculino",variable=variableSexo ,value="M", font=("Arial", 15), bg="light gray", command=lambda: asignarSexo("M"))
+	radioMasculino = tk.Radiobutton(ventanaRegistroNacimiento, text="Masculino",variable=Variablesexo ,value="M", font=("Arial", 15), bg="light gray", command=lambda: asignarSexo("M"))
 	radioMasculino.place(x=152, y=166)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelDistrito = tk.Label(ventanaRegistroNacimiento, text="Distrito:", font=("Arial", 12), bg="light gray")
@@ -170,91 +172,137 @@ def ventanaDeRegistroNacimiento():
 	entryCanton = tk.Entry(ventanaRegistroNacimiento, width=21, font=("Arial", 16))
 	entryCanton.grid(row=5, column=1, pady=13)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
-	labelProvincia = tk.Label(ventanaRegistroNacimiento, text="Provincia:", font=("Arial", 12), bg="light gray")
+	labelProvincia = tk.Label(ventanaRegistroNacimiento, text="Provincia:", font=("Arial", 12), bg="light gray",)
 	labelProvincia.grid(row=6, column=0, pady=13)
 
-	comboProvincia = ttk.Combobox(ventanaRegistroNacimiento,values=provincia, width=21, font=("Arial", 16), state="readonly")
+	comboProvincia = ttk.Combobox(ventanaRegistroNacimiento,values=provincia, width=21, font=("Arial", 16), state="disabled")
 	comboProvincia.grid(row=6, column=1, pady=13)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelDia = tk.Label(ventanaRegistroNacimiento, text="Dia:", font=("Arial", 12), bg="light gray")
 	labelDia.grid(row=7, column=0, pady=13)
 
 	dias = [str(i) for i in range(1,32)]
-	comboDias = ttk.Combobox(ventanaRegistroNacimiento, values=dias, font=("Arial", 16), state="readonly")
+	comboDias = ttk.Combobox(ventanaRegistroNacimiento, values=dias, font=("Arial", 16))
 	comboDias.grid(row=7, column=1, pady=13)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelMeses = tk.Label(ventanaRegistroNacimiento, text="Mes:", font=("Arial", 12), bg="light gray")
 	labelMeses.grid(row=8, column=0, pady=13)
 
 	meses = [str(i) for i in range(1,12)]
-	comboMeses = ttk.Combobox(ventanaRegistroNacimiento, values=meses, font=("Arial", 16), state="readonly")
+	comboMeses = ttk.Combobox(ventanaRegistroNacimiento, values=meses, font=("Arial", 16))
 	comboMeses.grid(row=8, column=1, pady=13)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelAnnos = tk.Label(ventanaRegistroNacimiento, text="Año:", font=("Arial", 12), bg="light gray")
 	labelAnnos.grid(row=9, column=0, pady=13)
 
-	comboAnnos = ttk.Combobox(ventanaRegistroNacimiento, values=annos, font=("Arial", 16), state="readonly")
+	comboAnnos = ttk.Combobox(ventanaRegistroNacimiento, values=annos, font=("Arial", 16))
 	comboAnnos.grid(row=9, column=1, pady=13)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelPadre = tk.Label(ventanaRegistroNacimiento, text="Padre:", font=("Arial", 12), bg="light gray")
 	labelPadre.grid(row=10, column=0, pady=13)
 
 	lHombres = [str(str(persona.getNombre())+" "+str(persona.getApellido1())+" "+str(persona.getApellido2())) for persona in listaHombres]
-	comboPadre = ttk.Combobox(ventanaRegistroNacimiento, values=lHombres, font=("Arial", 16), state="readonly")
+	comboPadre = ttk.Combobox(ventanaRegistroNacimiento, values=lHombres, font=("Arial", 16))
 	comboPadre.grid(row=10, column=1, pady=13)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelNacionalidadPadre = tk.Label(ventanaRegistroNacimiento, text="Nacionalidad:", font=("Arial", 12), bg="light gray")
 	labelNacionalidadPadre.grid(row=11, column=0, pady=13)
 
-	comboNacionalidadPadre = ttk.Combobox(ventanaRegistroNacimiento, values=nacionalidades, font=("Arial", 16), state="readonly")
+	comboNacionalidadPadre = ttk.Combobox(ventanaRegistroNacimiento, values=nacionalidades, font=("Arial", 16),state="disabled")
 	comboNacionalidadPadre.grid(row=11, column=1, pady=13)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelMadre = tk.Label(ventanaRegistroNacimiento, text="Madre:", font=("Arial", 12), bg="light gray")
 	labelMadre.grid(row=12, column=0, pady=13)
 
 	lMujeres = [str(str(persona.getNombre())+" "+str(persona.getApellido1())+" "+str(persona.getApellido2())) for persona in listaMujeres]
-	comboMadre = ttk.Combobox(ventanaRegistroNacimiento, values=lMujeres, font=("Arial", 16), state="readonly")
+	comboMadre = ttk.Combobox(ventanaRegistroNacimiento, values=lMujeres, font=("Arial", 16))
 	comboMadre.grid(row=12, column=1, pady=13)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	labelNacionalidadMadre = tk.Label(ventanaRegistroNacimiento, text="Nacionalidad:", font=("Arial", 12), bg="light gray")
 	labelNacionalidadMadre.grid(row=13, column=0, pady=13)
 
-	comboNacionalidadMadre = ttk.Combobox(ventanaRegistroNacimiento, values=nacionalidades, font=("Arial", 16), state="readonly")
+	comboNacionalidadMadre = ttk.Combobox(ventanaRegistroNacimiento, values=nacionalidades, font=("Arial", 16),state="disabled")
 	comboNacionalidadMadre.grid(row=13, column=1, pady=13)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+
 	def registrarPersona():
-		cedula = entryCitaProvincia.get() + "-" + entryCitaTomo.get() + "-" + entryCitaAsiento.get()
-		nombre = entryNombre.get()
-		sexo = variableSexo
-		localidad = entryDistrito.get() + ", " + entryCanton.get() + ", " + comboProvincia.get()
-		fechaNacimiento = comboDias.get() + "/" + comboMeses.get() + "/" + comboAnnos.get()
-		padre = comboPadre.get()
-		nacionalidadPadre = comboNacionalidadPadre.get()
-		madre = comboMadre.get()
-		nacionalidadMadre = comboNacionalidadMadre.get()
-		apellido1 = padre.split(" ")[1]
-		apellido2 = madre.split(" ")[2]
-		nuevaPersona = Persona(
-			cedula=cedula,
-			nombre=nombre,
-			apellido1=apellido1,
-			apellido2=apellido2,
-			sexo=sexo,
-			localidad=localidad,
-			fechaNacimiento=fechaNacimiento,
-			padre=padre,
-			nacionalidadPadre=nacionalidadPadre,
-			madre=madre,
-			nacionalidadMadre=nacionalidadMadre
+		if entryCitaProvincia.get().isdigit() and entryCitaTomo.get().isdigit() and entryCitaAsiento.get().isdigit():
+			if (1 <= int(entryCitaProvincia.get()) <= 9) and (len(entryCitaTomo.get()) == len(entryCitaAsiento.get()) == 4):
+				try:
+					global Variablesexo
+					cedula = entryCitaProvincia.get() + "-" + entryCitaTomo.get() + "-" + entryCitaAsiento.get()
 
-		)
+					valorProvincia = ""
+     
+					if entryCitaProvincia.get() == "1":
+						valorProvincia = "San José"
+					elif entryCitaProvincia.get() == "2":
+						valorProvincia = "Alajuela"
+					elif entryCitaProvincia.get() == "3":
+						valorProvincia = "Cartago"
+					elif entryCitaProvincia.get() == "4":
+						valorProvincia = "Heredia"
+					elif entryCitaProvincia.get() == "5":
+						valorProvincia = "Guanacaste"
+					elif entryCitaProvincia.get() == "6":
+						valorProvincia = "Puntarenas"
+					elif entryCitaProvincia.get() == "7":
+						valorProvincia = "Limón"
+					if entryCitaProvincia.get() == "8" or entryCitaProvincia.get() == "9":
+						comboProvincia.config(state="readonly")
+      
+					if valorProvincia in provincia:
+						comboProvincia.current(provincia.index(valorProvincia))
+						
+					nombre = entryNombre.get()
+					sexo = Variablesexo
+					fechaNacimiento = comboDias.get() + "/" + comboMeses.get() + "/" + comboAnnos.get()
+					padre = comboPadre.get()
+					madre = comboMadre.get()
+					apellido = padre.split(" ")[1] +" "+ madre.split(" ")[1]
 
-		registroPersonas.append(nuevaPersona)
-		
-		for i in registroPersonas:
-			i.mostrarTodo()
+					for nombrePadres in registroPersonas:
+						if padre == str(nombrePadres.getNombre())+" "+str(nombrePadres.getApellido1())+" "+str(nombrePadres.getApellido2()):
+							comboNacionalidadPadre.current(nacionalidades.index(nombrePadres.getNacionalidadPadre()))
+						if madre == str(nombrePadres.getNombre())+" "+str(nombrePadres.getApellido1())+" "+str(nombrePadres.getApellido2()):
+							comboNacionalidadMadre.current(nacionalidades.index(nombrePadres.getNacionalidadMadre()))
+       
+					nacionalidadPadre = comboNacionalidadPadre.get()
+					nacionalidadMadre = comboNacionalidadMadre.get()
+					if comboProvincia.get() != "":
+						localidad = entryDistrito.get() + "," + entryCanton.get() + "," + comboProvincia.get()
+					else:
+						comboProvincia.current.index(0)
+						localidad = entryDistrito.get() + "," + entryCanton.get() + "," + comboProvincia.get()
+					entryApellidos.config(state="normal")
+					entryApellidos.insert(0,apellido)
+					entryApellidos.config(state="disabled")
+					nuevaPersona = Persona(
+						cedula=cedula,
+						nombre=nombre,
+						apellido1=padre.split(" ")[1],
+						apellido2=madre.split(" ")[1],
+						sexo=sexo,
+						localidad=localidad,
+						fechaNacimiento=fechaNacimiento,
+						padre=padre,
+						nacionalidadPadre=nacionalidadPadre,
+						madre=madre,
+						nacionalidadMadre=nacionalidadMadre
 
+					)
+
+					registroPersonas.append(nuevaPersona)
+					
+					for i in registroPersonas:
+						i.mostrarTodo()
+				except:
+					messagebox.showerror("Error",f"Rellene los espacios solicitados")
+			else:
+				messagebox.showerror("Error","El primer digito de la cedula no puede ser menor a 1 o mayo a 9")
+		else:
+			messagebox.showerror("Error","La cedula debe ser en digitos")
 	botonRegistrar = tk.Button(ventanaRegistroNacimiento, text="Registrar", width=12, height=1, font=("Arial", 12), command=registrarPersona)
 	botonRegistrar.grid(row=14, column=0, pady=10)
 
@@ -283,7 +331,7 @@ def ventanaDeRegistroNacimiento():
  # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
 def ventanaReportesProvincia():
     ventanaReporte = tk.Tk()
-    ventanaReporte.title("Ventana de reportes por provincia")
+    ventanaReporte.title("Ventana principal")
     ventanaReporte.geometry("400x300")
     ventanaReporte.resizable(width=False, height=False)
     ventanaReporte.configure(bg="light gray")
@@ -326,10 +374,16 @@ def ventanaReportesProvincia():
 
     botonSalir = tk.Button(ventanaReporte, text="Salir", width=20, height=2, command=ventanaReporte.destroy)
     botonSalir.grid(row=3, column=0, pady=10)
+    
+    botonCrear = tk.Button(ventanaReporte, text="Crear", width=20,height=2)
+    botonCrear.grid(row=2,column=0,pady=10)
+    
+    botonSalir = tk.Button(ventanaReporte, text="Salir", width=20, height=2, command=ventanaReporte.destroy)
+    botonSalir.grid(row=3, column=0, pady=10)
  # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
 def ventanaReportesAnnos():
 	ventanaReporte = tk.Tk()
-	ventanaReporte.title("Ventana de reportes por año")
+	ventanaReporte.title("Ventana principal")
 	ventanaReporte.geometry("400x300")
 	ventanaReporte.resizable(width=False, height=False)
 	ventanaReporte.configure(bg="light gray")
@@ -356,10 +410,11 @@ def ventanaReportesAnnos():
 
 	botonSalir = tk.Button(ventanaReporte, text="Salir", width=20, height=2, command=ventanaReporte.destroy)
 	botonSalir.grid(row=3, column=0, pady=10)
+	
  # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
 def ventanaReportesHospital():
 	ventanaReporte = tk.Tk()
-	ventanaReporte.title("Ventana de reportes por hospital")
+	ventanaReporte.title("Ventana principal")
 	ventanaReporte.geometry("400x300")
 	ventanaReporte.resizable(width=False, height=False)
 	ventanaReporte.configure(bg="light gray")
@@ -373,11 +428,12 @@ def ventanaReportesHospital():
 	botonProvincia.grid(row=1, column=0, pady=10)
 
 	botonSalir = tk.Button(ventanaReporte, text="Salir", width=20, height=2, command=ventanaReporte.destroy)
-	botonSalir.grid(row=3, column=0, pady=10)
+	botonSalir.grid(row=4, column=0, pady=10)
+
  # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
 def ventanaDeReportes():
 	ventanaReporte = tk.Tk()
-	ventanaReporte.title("Ventana de reportes")
+	ventanaReporte.title("Ventana principal")
 	ventanaReporte.geometry("400x300")
 	ventanaReporte.resizable(width=False, height=False)
 	ventanaReporte.configure(bg="light gray")
@@ -399,39 +455,6 @@ def ventanaDeReportes():
 	botonSalir = tk.Button(ventanaReporte, text="Salir", width=20, height=2, command=ventanaReporte.destroy)
 	botonSalir.grid(row=4, column=0, pady=10)
 # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
-def ventanaCertificado():
-	ventanaCert = tk.Tk()
-	ventanaCert.title("Ventana Certificado")
-	ventanaCert.geometry("400x300")
-	ventanaCert.resizable(width=False, height=False)
-	ventanaCert.configure(bg="light gray")
-	ventanaCert.columnconfigure(0, weight=1)
-	ventanaCert.rowconfigure(1, weight=1)
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
-	labelCedula = tk.Label(ventanaCert, text="Ingrese la cedula:", font=("Arial", 12), bg="light gray")
-	labelCedula.grid(row=0, column=0, pady=10)
-
-	entryCitaProvincia = tk.Entry(ventanaCert, width=3, font=("Arial", 16))
-	entryCitaProvincia.place(x=85, y=60)
-
-	labelGuion = tk.Label(ventanaCert, text="-", font=("Arial", 16), bg="light gray")
-	labelGuion.place(x=126, y=60)
-
-	entryCitaTomo = tk.Entry(ventanaCert, width=6, font=("Arial", 16))
-	entryCitaTomo.place(x=140, y=60)
-
-	labelGuion = tk.Label(ventanaCert, text="-", font=("Arial", 16), bg="light gray")
-	labelGuion.place(x=217, y=60)
-
-	entryCitaAsiento = tk.Entry(ventanaCert, width=6, font=("Arial", 16))
-	entryCitaAsiento.place(x=234, y=60)
-
-	botonanno = tk.Button(ventanaCert, text="Buscar", width=20, height=2, command="")
-	botonanno.grid(row=2, column=0, pady=10)
-
-	botonSalir = tk.Button(ventanaCert, text="Salir", width=20, height=2, command=ventanaCert.destroy)
-	botonSalir.grid(row=3, column=0, pady=10)
-# ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
 def ventanaDeInicio():
 	ventanaInicio = tk.Tk()
 	ventanaInicio.title("Ventana principal")
@@ -447,7 +470,7 @@ def ventanaDeInicio():
 	botonMostrarArbolGenealogico = tk.Button(ventanaInicio, text="Mostrar Árbol Genealógico", width=20, height=2, command=mostrarArbolGenealogico)
 	botonMostrarArbolGenealogico.grid(row=1, column=0, pady=10)
 
-	botonCertificadoNacimiento= tk.Button(ventanaInicio, text="Certificado de Nacimiento", width=20, height=2, command=ventanaCertificado)
+	botonCertificadoNacimiento= tk.Button(ventanaInicio, text="Certificado de Nacimiento", width=20, height=2)
 	botonCertificadoNacimiento.grid(row=2, column=0, pady=10)
 
 	botonReportes = tk.Button(ventanaInicio, text="Reportes", width=20, height=2,command=ventanaDeReportes)
