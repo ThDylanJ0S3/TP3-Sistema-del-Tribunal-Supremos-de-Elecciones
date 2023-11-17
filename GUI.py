@@ -394,10 +394,16 @@ def ventanaReportesAnnos():
 	ventanaReporte.rowconfigure(1, weight=1)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	def crearRep():
-		global annos
+		listaAnnios = []
+		for persona in registroPersonas:
+			annio = persona.getFechaNacimiento().split("/")[2]
+			if not int(annio) in listaAnnios:
+				listaAnnios.append(int(annio))
+		listaAnnios = sorted(listaAnnios)
 		annoSeleccionado = entryAnno.get()
-		if annoSeleccionado.isdigit() and int(annoSeleccionado) in annos:
-			generarHTMLAnno(annoSeleccionado, registroPersonas)
+		if annoSeleccionado.isdigit():
+			print(listaAnnios)
+			generarHTMLAnno(int(annoSeleccionado), registroPersonas, listaAnnios)
 			messagebox.showinfo("Éxito", f"Se generó el reporte para el año {annoSeleccionado}")
 		else:
 			messagebox.showerror("Error", "Por favor, ingrese un año válido")

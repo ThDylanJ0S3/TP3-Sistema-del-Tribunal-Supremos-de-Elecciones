@@ -103,47 +103,52 @@ def generarHTMLProvincia(nProvincia, provincia, listaPersonas):
             archivoContinente.close() 
 
 
-def generarHTMLAnno(annos, listaPersonas):
-    with open(f"./personasPorAnno{anno}.html","w", encoding="utf-8") as archivoAnno:
+def generarHTMLAnno(anno, listaPersonas, listaAnnios):
+    with open(f"./personasPorAño{anno}.html","w", encoding="utf-8") as archivoAnno:
         archivoAnno.write("<meta charset='UTF-8'>")
         archivoAnno.write("<html><head><title>Personas por Año</title></head><body>")
-        archivoAnno.write(f"<h1>Personas nacidas en el año {anno}</h1>")
-        archivoAnno.write("<table>")
-        archivoAnno.write("<tr style='background-color: #a2c8cc;'><th>Cedula</th><th>Nombre Completo</th><th>Fecha de Nacimiento</th><th>Sexo</th><th>Nombre del Padre</th><th>Nombre de la Madre</th></tr>")
+        archivoAnno.write(f"<h1>Personas nacidas a partir del año {anno}</h1>")
         
         i = 0
-        listaImprimir = []
+        
+        for annoRegistrado in listaAnnios:
+            print(annoRegistrado)
+            print(listaAnnios)
+            if annoRegistrado >= anno:
+                archivoAnno.write(f"<h2>Personas nacidas en el año {annoRegistrado}</h2>")
+                archivoAnno.write("<table>")
+                archivoAnno.write("<tr style='background-color: #a2c8cc;'><th>Cedula</th><th>Nombre Completo</th><th>Fecha de Nacimiento</th><th>Sexo</th><th>Nombre del Padre</th><th>Nombre de la Madre</th></tr>")
+                listaImprimir = []
+                for persona in listaPersonas:
+                    fechaNacimiento = persona.getFechaNacimiento().split("/")
+                    if int(fechaNacimiento[-1]) == annoRegistrado:
+                        cedula = persona.getCedula()
+                        nombre = f"{persona.getNombre()} {persona.getApellido1()} {persona.getApellido2()}"
+                        fechaNacimiento = persona.getFechaNacimiento()
+                        sexo = persona.getSexo()
+                        padre = persona.getPadre()
+                        madre = persona.getMadre()
 
-        for persona in listaPersonas:
-            fechaNacimiento = persona.getFechaNacimiento().split("/")
-            if fechaNacimiento[-1] == anno:
-                cedula = persona.getCedula()
-                nombre = f"{persona.getNombre()} {persona.getApellido1()} {persona.getApellido2()}"
-                fechaNacimiento = persona.getFechaNacimiento()
-                sexo = persona.getSexo()
-                padre = persona.getPadre()
-                madre = persona.getMadre()
+                        listaImprimir.append([cedula, nombre, fechaNacimiento, sexo, padre, madre])
 
-                listaImprimir.append([cedula, nombre, nacimiento, sexo, padre, madre])
+                        listaImprimir = sorted(listaImprimir, key=lambda x: (x[3]=="M", x[1]))
 
-        listaImprimir = sorted(listaImprimir, key=lambda x: (x[3]=="M", x[1]))
+                        for persona in listaImprimir:
+                            if i % 2 == 0:
+                                fondo = "#c5e0dc"
+                            else:
+                                fondo = "#f8edeb"
+                            archivoAnno.write(f"<tr style='background-color: {fondo}'>")
+                            archivoAnno.write(f"<td>{persona[0]}</td>")
+                            archivoAnno.write(f"<td>{persona[1]}</td>")
+                            archivoAnno.write(f"<td>{persona[2]}</td>")
+                            archivoAnno.write(f"<td>{persona[3]}</td>")
+                            archivoAnno.write(f"<td>{persona[4]}</td>")
+                            archivoAnno.write(f"<td>{persona[5]}</td>")
+                            i += 1
+                archivoAnno.write("</tr>")
 
-        for persona in listaImprimir:
-            if i % 2 == 0:
-                fondo = "#c5e0dc"
-            else:
-                fondo = "#f8edeb"
-            archivoAnno.write(f"<tr style='background-color: {fondo}'>")
-            archivoAnno.write(f"<td>{persona[0]}</td>")
-            archivoAnno.write(f"<td>{persona[1]}</td>")
-            archivoAnno.write(f"<td>{persona[2]}</td>")
-            archivoAnno.write(f"<td>{persona[3]}</td>")
-            archivoAnno.write(f"<td>{persona[4]}</td>")
-            archivoAnno.write(f"<td>{persona[5]}</td>")
-            i += 1
-            archivoAnno.write("</tr>")
-
-        archivoAnno.write("</table></body></html>")
+            archivoAnno.write("</table></body></html>")
 
 def generarCertificadoHtml(cedula, listaPersonas):
     persona = None
