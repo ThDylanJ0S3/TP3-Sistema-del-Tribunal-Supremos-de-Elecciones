@@ -63,3 +63,84 @@ def leerRegistro(nombreArch):
         print(f"Error: {e}")
 
     return usuarios
+
+
+def generarHTMLProvincia(nProvincia, provincia, listaPersonas):
+    with open(f"./personasPorProvincia.html","w", encoding="utf-8") as archivoContinente:
+            archivoContinente.write("<meta charset='UTF-8'>")
+            archivoContinente.write("<html><head><title>Personas por Provincia</title></head><body>")
+            archivoContinente.write(f"<h1>Personas de {provincia}</h1>")
+            archivoContinente.write("<table>")
+            archivoContinente.write("<tr style='background-color: #a2c8cc;'><th>Cedula</th><th>Nombre Completo</th><th>Fecha de Nacimiento</th><th>Sexo</th></tr>")
+            i = 0
+            listaImprimir = []
+            #Ciclo para crear cada fila
+            for personas in listaPersonas:
+                if personas.getCedula()[0] == nProvincia:
+                    cedula = personas.getCedula()
+                    nombre = str(personas.getNombre())+" "+str(personas.getApellido1())+" "+str(personas.getApellido2())
+                    nacimiento = personas.getFechaNacimiento()
+                    sexo = personas.getSexo()
+
+                    listaImprimir.append([cedula, nombre, nacimiento, sexo])
+
+            listaImprimir = sorted(listaImprimir, key=lambda x:(x[3]=="M", x[1]))
+
+            for personas in listaImprimir:
+                if i % 2 == 0:
+                    fondo = "#c5e0dc"
+                else:
+                    fondo = "#f8edeb"
+                archivoContinente.write(f"<tr style='background-color: {fondo}'>")
+                archivoContinente.write(f"<td>{personas[0]}</td>")
+                archivoContinente.write(f"<td>{personas[1]}</td>")
+                archivoContinente.write(f"<td>{personas[2]}</td>")
+                archivoContinente.write(f"<td>{personas[3]}</td>")
+                i += 1
+                archivoContinente.write("</tr>")
+
+            archivoContinente.write("</table></body></html>")
+            archivoContinente.close() 
+
+
+def generarHTMLAnno(annos, listaPersonas):
+    with open(f"./personasPorAnno{anno}.html","w", encoding="utf-8") as archivoAnno:
+        archivoAnno.write("<meta charset='UTF-8'>")
+        archivoAnno.write("<html><head><title>Personas por Año</title></head><body>")
+        archivoAnno.write(f"<h1>Personas nacidas en el año {anno}</h1>")
+        archivoAnno.write("<table>")
+        archivoAnno.write("<tr style='background-color: #a2c8cc;'><th>Cedula</th><th>Nombre Completo</th><th>Fecha de Nacimiento</th><th>Sexo</th><th>Nombre del Padre</th><th>Nombre de la Madre</th></tr>")
+        
+        i = 0
+        listaImprimir = []
+
+        for persona in listaPersonas:
+            fechaNacimiento = persona.getFechaNacimiento().split("/")
+            if fechaNacimiento[-1] == anno:
+                cedula = persona.getCedula()
+                nombre = f"{persona.getNombre()} {persona.getApellido1()} {persona.getApellido2()}"
+                fechaNacimiento = persona.getFechaNacimiento()
+                sexo = persona.getSexo()
+                padre = persona.getPadre()
+                madre = persona.getMadre()
+
+                listaImprimir.append([cedula, nombre, nacimiento, sexo, padre, madre])
+
+        listaImprimir = sorted(listaImprimir, key=lambda x: (x[3]=="M", x[1]))
+
+        for persona in listaImprimir:
+            if i % 2 == 0:
+                fondo = "#c5e0dc"
+            else:
+                fondo = "#f8edeb"
+            archivoAnno.write(f"<tr style='background-color: {fondo}'>")
+            archivoAnno.write(f"<td>{persona[0]}</td>")
+            archivoAnno.write(f"<td>{persona[1]}</td>")
+            archivoAnno.write(f"<td>{persona[2]}</td>")
+            archivoAnno.write(f"<td>{persona[3]}</td>")
+            archivoAnno.write(f"<td>{persona[4]}</td>")
+            archivoAnno.write(f"<td>{persona[5]}</td>")
+            i += 1
+            archivoAnno.write("</tr>")
+
+        archivoAnno.write("</table></body></html>")
