@@ -7,6 +7,7 @@
 import pickle
 from datetime import datetime
 #from funciones import *
+import xml.etree.ElementTree as ET
 
 def graba(nomArchGrabar,lista):
     """
@@ -240,5 +241,57 @@ def generarCertificadoHtml(cedula, listaPersonas):
             file.write(contenidoHtml)
 
         print("Se ha generado el archivo HTML 'certificadoNacimiento.html'")
+    else:
+        print("La persona con la cédula proporcionada no está en la lista")
+
+def generarCertificadoXml(cedula, listaPersonas):
+    persona = None
+
+    for p in listaPersonas:
+        if p.getCedula() == cedula:
+            persona = p
+            break
+
+    if persona:
+        certificado = ET.Element("CertificadoNacimiento")
+
+        alTomo = ET.SubElement(certificado, "AlTomo")
+        alTomo.text = persona.getCedula().split("-")[1]
+
+        asiento = ET.SubElement(certificado, "Asiento")
+        asiento.text = persona.getCedula().split("-")[2]
+
+        cita = ET.SubElement(certificado, "Cita")
+        cita.text = persona.getCedula()
+
+        diceQue = ET.SubElement(certificado, "DiceQue")
+        diceQue.text = f"{persona.getNombre()} {persona.getApellido1()} {persona.getApellido2()}"
+
+        sexo = ET.SubElement(certificado, "Sexo")
+        sexo.text = persona.getSexo()
+
+        nacioEn = ET.SubElement(certificado, "NacioEn")
+        nacioEn.text = persona.getLocalidad()
+
+        elDia = ET.SubElement(certificado, "ElDia")
+        elDia.text = persona.getFechaNacimiento()
+
+        padre = ET.SubElement(certificado, "Padre")
+        padre.text = persona.getPadre()
+
+        nacionalidadPadre = ET.SubElement(certificado, "NacionalidadPadre")
+        nacionalidadPadre.text = persona.getNacionalidadPadre()
+
+        madre = ET.SubElement(certificado, "Madre")
+        madre.text = persona.getMadre()
+
+        nacionalidadMadre = ET.SubElement(certificado, "NacionalidadMadre")
+        nacionalidadMadre.text = persona.getNacionalidadMadre()
+
+        arbolXml = ET.ElementTree(certificado)
+
+        arbolXml.write("certificadoNacimiento.xml")
+
+        print("Se ha generado el archivo XML 'certificadoNacimiento.xml'")
     else:
         print("La persona con la cédula proporcionada no está en la lista")
