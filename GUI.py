@@ -292,7 +292,10 @@ def ventanaDeRegistroNacimiento():
 						nacionalidadMadre=nacionalidadMadre
 
 					)
-
+					if nuevaPersona.getSexo() == "F":
+						listaMujeres.append(nuevaPersona)
+					else:
+						listaHombres.append(nuevaPersona)
 					registroPersonas.append(nuevaPersona)
 					
 					for i in registroPersonas:
