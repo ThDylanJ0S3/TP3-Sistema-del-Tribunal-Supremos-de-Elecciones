@@ -222,7 +222,6 @@ def ventanaDeRegistroNacimiento():
 	comboNacionalidadMadre = ttk.Combobox(ventanaRegistroNacimiento, values=nacionalidades, font=("Arial", 16), state="readonly")
 	comboNacionalidadMadre.grid(row=13, column=1, pady=13)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
-
 	def registrarPersona():
 		cedula = entryCitaProvincia.get() + "-" + entryCitaTomo.get() + "-" + entryCitaAsiento.get()
 		nombre = entryNombre.get()
@@ -280,7 +279,6 @@ def ventanaDeRegistroNacimiento():
 
 	botonRegresar = tk.Button(ventanaRegistroNacimiento, text="Regresar", width=12, height=1, font=("Arial", 12), command=ventanaRegistroNacimiento.destroy)
 	botonRegresar.grid(row=14, column=2, pady=10)
-
  # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
 def ventanaReportesProvincia():
     ventanaReporte = tk.Tk()
@@ -327,7 +325,6 @@ def ventanaReportesProvincia():
 
     botonSalir = tk.Button(ventanaReporte, text="Salir", width=20, height=2, command=ventanaReporte.destroy)
     botonSalir.grid(row=3, column=0, pady=10)
-
  # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
 def ventanaReportesAnnos():
 	ventanaReporte = tk.Tk()
@@ -358,7 +355,6 @@ def ventanaReportesAnnos():
 
 	botonSalir = tk.Button(ventanaReporte, text="Salir", width=20, height=2, command=ventanaReporte.destroy)
 	botonSalir.grid(row=3, column=0, pady=10)
-	
  # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
 def ventanaReportesHospital():
 	ventanaReporte = tk.Tk()
@@ -377,7 +373,6 @@ def ventanaReportesHospital():
 
 	botonSalir = tk.Button(ventanaReporte, text="Salir", width=20, height=2, command=ventanaReporte.destroy)
 	botonSalir.grid(row=3, column=0, pady=10)
-
  # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
 def ventanaDeReportes():
 	ventanaReporte = tk.Tk()
@@ -412,7 +407,6 @@ def ventanaCertificado():
 	ventanaCert.columnconfigure(0, weight=1)
 	ventanaCert.rowconfigure(1, weight=1)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
-	
 	labelCedula = tk.Label(ventanaCert, text="Ingrese la cedula:", font=("Arial", 12), bg="light gray")
 	labelCedula.grid(row=0, column=0, pady=10)
 
@@ -436,8 +430,6 @@ def ventanaCertificado():
 
 	botonSalir = tk.Button(ventanaCert, text="Salir", width=20, height=2, command=ventanaCert.destroy)
 	botonSalir.grid(row=3, column=0, pady=10)
-	ventanaCert.mainloop()
-
 # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ #
 def ventanaDeInicio():
 	ventanaInicio = tk.Tk()
@@ -510,7 +502,7 @@ def ventanaDeRegistro():
 	botonLimpiar = tk.Button(ventanaRegistro, text="Limpiar", width=20, height=2, state="disabled", command=limpiar)
 	botonLimpiar.place(x=200, y=120)
 
-	#ventanaRegistro.mainloop()
+	ventanaRegistro.mainloop()
  
-ventanaCertificado()
-#ventanaDeRegistro()
+
+ventanaDeRegistro()
